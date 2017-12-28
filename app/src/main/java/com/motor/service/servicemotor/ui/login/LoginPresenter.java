@@ -53,13 +53,13 @@ public class LoginPresenter implements BasePresenter {
     }
 
     protected void loginWithEmail(final String email, final String password) {
-        activity.showLoading(true);
+//        activity.showLoading(true);
         firebaseUserService.getUserWithEmail(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
-                            activity.showLoading(false);
+//                            activity.showLoading(false);
                             for(UserInfo profile : task.getResult().getUser().getProviderData()) {
                                 String providerId = profile.getProviderId();
                                 String uid = profile.getUid();
@@ -70,7 +70,7 @@ public class LoginPresenter implements BasePresenter {
                             }
                             processLogin(task.getResult().getUser(), task.getResult().getUser().getProviderData().get(1));
                         } else {
-                            activity.showLoading(false);
+//                            activity.showLoading(false);
                             User user = new User();
                             user.setEmail(email);
                             user.setProvider("password");
@@ -91,7 +91,7 @@ public class LoginPresenter implements BasePresenter {
             firebaseUserService.getAuthWithGoogle(activity, acct)
                     .addOnCompleteListener(activity, task -> {
                         if (task.isSuccessful()) {
-                            activity.showLoading(false);
+//                            activity.showLoading(false);
                             for(UserInfo profile : task.getResult().getUser().getProviderData()) {
                                 String providerId = profile.getProviderId();
                                 String uid = profile.getUid();
@@ -103,7 +103,7 @@ public class LoginPresenter implements BasePresenter {
                             Log.e("getAuthWithGoogle", "LoginPresenter" + task.getResult().getUser().getProviderData().toString());
                             processLogin(task.getResult().getUser(), task.getResult().getUser().getProviderData().get(1));
                         } else {
-                            activity.showLoading(false);
+//                            activity.showLoading(false);
                             activity.showLoginFail("Gagal Masuk");
                         }
                     }).addOnFailureListener(e -> {activity.showLoginFail(e.getMessage());});
@@ -136,11 +136,11 @@ public class LoginPresenter implements BasePresenter {
     }
 
     protected void getAuthWithFacebook(final AccessToken accessToken) {
-        activity.showLoading(true);
+//        activity.showLoading(true);
         firebaseUserService.getAuthWithFacebook(accessToken)
                 .addOnCompleteListener(activity, task -> {
                     if(task.isSuccessful()) {
-                        activity.showLoading(false);
+//                        activity.showLoading(false);
                         for(UserInfo profile : task.getResult().getUser().getProviderData()) {
                             String providerId = profile.getProviderId();
                             String uid = profile.getUid();
@@ -151,7 +151,7 @@ public class LoginPresenter implements BasePresenter {
                         }
                         //processLogin(task.getResult().getUser(), task.getResult().getUser().getProviderData().get(1));
                     } else {
-                        activity.showLoading(false);
+//                        activity.showLoading(false);
                         activity.showLoginFail("Oops, email sudah digunakan");
                     }
                 });
@@ -191,12 +191,12 @@ public class LoginPresenter implements BasePresenter {
             if (providerQueryResult.getProviders().isEmpty()){
                 getAuthWithGoogle(result);
             }else{
-                activity.showLoading(false);
+//                activity.showLoading(false);
                 activity.showLoginFail("Email sudah digunakan oleh provider lain (Facebook atau Google)");
                 firebaseUserService.revokeTokenGoogle(activity);
             }
         }).addOnFailureListener(e -> {
-            activity.showLoading(false);
+//            activity.showLoading(false);
             activity.showLoginFail("Email sudah digunakan ");
         });
     }

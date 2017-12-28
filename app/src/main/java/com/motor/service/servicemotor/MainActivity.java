@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.motor.service.servicemotor.base.BaseApplication;
 import com.motor.service.servicemotor.data.remote.model.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,4 +22,6 @@ public class MainActivity extends AppCompatActivity {
         BaseApplication.get(activity).createUserComponent(user);
         activity.startActivity(intent);
     }
+
+
 }

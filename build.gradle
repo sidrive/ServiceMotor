@@ -7,18 +7,26 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:3.1.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
     }
 }
 
 allprojects {
     repositories {
-        google()
+        maven {
+            url "https://jitpack.io"
+        }
+        maven {
+
+            url "https://maven.google.com"
+        }
         jcenter()
     }
 }
@@ -30,6 +38,7 @@ task clean(type: Delete) {
 ext {
     final FIREBASE_VERSION = '11.0.4'
     final MAP_UTILS_VERSION = '0.5+'
+    final DAGGER_VERSION = '2.2'
 
     fbcore = "com.google.firebase:firebase-core:${FIREBASE_VERSION}"
     fbauth = "com.google.firebase:firebase-auth:${FIREBASE_VERSION}"
@@ -47,4 +56,6 @@ ext {
     gmap = "com.google.android.gms:play-services-maps:${FIREBASE_VERSION}"
     gcore = "com.google.android.gms:play-services:${FIREBASE_VERSION}"
     gmapUtil = "com.google.maps.android:android-maps-utils:${MAP_UTILS_VERSION}"
+
+    daggerCompiler = "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 }
