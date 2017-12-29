@@ -6,4 +6,6 @@
     <color name="colorShadow2">#2E000000</color>
     <color name="colorWhite">#fff</color>
     <color name="colorShadowWhite">#5Effffff</color>
+    <color name="colorSoft">#BFB9B9</color>
+    <color name="colorTransparent">#00000000</color>
 </resources>
