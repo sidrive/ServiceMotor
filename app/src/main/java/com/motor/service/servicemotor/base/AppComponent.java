@@ -6,6 +6,8 @@ import com.motor.service.servicemotor.data.remote.user.UserComponent;
 import com.motor.service.servicemotor.data.remote.user.UserModule;
 import com.motor.service.servicemotor.ui.login.LoginActivityComponent;
 import com.motor.service.servicemotor.ui.login.LoginActivityModule;
+import com.motor.service.servicemotor.ui.main.MainActivityComponent;
+import com.motor.service.servicemotor.ui.main.MainActivityModule;
 import com.motor.service.servicemotor.ui.splash.SplashActivityComponent;
 import com.motor.service.servicemotor.ui.splash.SplashActivityModule;
 
@@ -32,6 +34,8 @@ public interface AppComponent {
         SplashActivityComponent plus(SplashActivityModule activityModule);
 
         LoginActivityComponent plus(LoginActivityModule activityModule);
+
+        MainActivityComponent plus(MainActivityModule activityModule);
 
         UserComponent plus(UserModule userModule);
 

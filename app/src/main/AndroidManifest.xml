@@ -28,6 +28,10 @@
         </activity>
 
         <activity
+            android:name=".ui.main.MainAct"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden"/>
