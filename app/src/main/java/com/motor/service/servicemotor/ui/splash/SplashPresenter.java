@@ -2,6 +2,7 @@ package com.motor.service.servicemotor.ui.splash;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,14 +34,16 @@ public class SplashPresenter implements BasePresenter {
 
     @Override
     public void subscribe() {
-        authListener = firebaseAuth -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
 
-            if(user == null) {
-                activity.showLoginActivity();
-            } else {
-                processLogin(user);
-
+                if(user == null) {
+                    activity.showLoginActivity();
+                } else {
+                    processLogin(user);
+                }
             }
         };
 
@@ -70,12 +73,13 @@ public class SplashPresenter implements BasePresenter {
                                     if (remoteUser.getPhone() != null) user.setPhone(remoteUser.getPhone());
                                 }
 
-                                /*activity.showRegisterActivity(user);*/
+                                Toast.makeText(activity, "Berhasillll", Toast.LENGTH_LONG).show();
+                                activity.showRegisterActivity(user);
                             } else {
                             /*if (remoteUser.isVerified() == true) {*/ activity.showMainActivity(remoteUser);
                                 sendUser(user.getUid());
-                           /* }
-                            else activity.showVerificationActivity(remoteUser);*/
+                            /*}
+                            else activity.showMainActivity(remoteUser);*/
 
                             }
                         }

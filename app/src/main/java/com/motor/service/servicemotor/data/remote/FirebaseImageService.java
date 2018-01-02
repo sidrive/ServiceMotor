@@ -12,7 +12,9 @@ import com.google.firebase.storage.StorageReference;
 public class FirebaseImageService {
 
     private Application application;
+
     private FirebaseStorage firebaseStorage;
+
     private StorageReference storageReference;
 
     public FirebaseImageService(Application application){
@@ -29,6 +31,47 @@ public class FirebaseImageService {
     public StorageReference getImageRefThumb(String uid){
         StorageReference avatarRefThumb = storageReference.child("users/"+uid+"/thumb_profile.jpg");
         return avatarRefThumb;
+    }
+
+    public StorageReference getUserProofKtp(String uid){
+        StorageReference imgRef = storageReference.child("users/"+uid+"/ktp.jpg");
+        return imgRef;
+    }
+
+    public StorageReference getUserProofKtpThumb(String uid){
+        StorageReference imgRef = storageReference.child("users/"+uid+"/thumb_ktp.jpg");
+        return imgRef;
+    }
+
+    public StorageReference getUserProofSertifikat(String uid){
+        StorageReference imgRef = storageReference.child("users/"+uid+"/sertifikat.jpg");
+        return imgRef;
+    }
+
+    public StorageReference getUserProofSertifikatThumb(String uid){
+        StorageReference imgRef = storageReference.child("users/"+uid+"/thumb_sertifikat.jpg");
+        return imgRef;
+    }
+
+
+    public StorageReference getUserProofIjazah(String uid){
+        StorageReference imgRef = storageReference.child("users/"+uid+"/ijazah.jpg");
+        return imgRef;
+    }
+
+    public StorageReference getUserProofIjazahThumb(String uid){
+        StorageReference imgRef = storageReference.child("users/"+uid+"/thumb_ijazah.jpg");
+        return imgRef;
+    }
+
+    public StorageReference getUserProofKTM(String uid){
+        StorageReference imgRef = storageReference.child("users/"+uid+"/ktm.jpg");
+        return imgRef;
+    }
+
+    public StorageReference getUserProofKTMThumb(String uid){
+        StorageReference imgRef = storageReference.child("users/"+uid+"/thumb_ktm.jpg");
+        return imgRef;
     }
 
 

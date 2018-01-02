@@ -1,6 +1,8 @@
 package com.motor.service.servicemotor.data.remote.user;
 
 import com.motor.service.servicemotor.base.annotation.UserScope;
+import com.motor.service.servicemotor.ui.editprofil.EditProfilActivityComponent;
+import com.motor.service.servicemotor.ui.editprofil.EditProfilActivityModule;
 
 import dagger.Subcomponent;
 
@@ -22,7 +24,7 @@ public interface UserComponent {
 //
 //    MainComponent plus(MainModule mainModule);
 //
-//    EditProfileActivityComponent plus(EditProfileActivityModule activityModule);
+    EditProfilActivityComponent plus(EditProfilActivityModule activityModule);
 //
 //    SettingActivityComponent plus(SettingActivityModule activityModule);
 //

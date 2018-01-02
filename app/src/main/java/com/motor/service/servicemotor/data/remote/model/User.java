@@ -49,13 +49,13 @@ public class User implements Serializable {
     @Nullable
     public String pendidikan;
     @Nullable
-    public String prodi;
+    public String platmtr;
     @Nullable
     public boolean active;
     @Nullable
-    public String instagram;
+    public String merkmtr;
     @Nullable
-    public String facebook;
+    public String jenismtr;
     @Nullable
     public long createdAt;
     @Nullable
@@ -276,12 +276,12 @@ public class User implements Serializable {
     }
 
     @Nullable
-    public String getProdi() {
-        return prodi;
+    public String getPlatMotor() {
+        return platmtr;
     }
 
-    public void setProdi(@Nullable String prodi) {
-        this.prodi = prodi;
+    public void setPlatMotor(@Nullable String platmtr) {
+        this.platmtr = platmtr;
     }
 
     public void setActive(@Nullable boolean active) {
@@ -294,21 +294,21 @@ public class User implements Serializable {
     }
 
     @Nullable
-    public String getInstagram() {
-        return instagram;
+    public String getMerkMotor() {
+        return merkmtr;
     }
 
-    public void setInstagram(@Nullable String instagram) {
-        this.instagram = instagram;
+    public void setMerkMotor(@Nullable String merkmtr) {
+        this.merkmtr = merkmtr;
     }
 
     @Nullable
-    public String getFacebook() {
-        return facebook;
+    public String getJenisMotor() {
+        return jenismtr;
     }
 
-    public void setFacebook(@Nullable String facebook) {
-        this.facebook = facebook;
+    public void setJenisMotor(@Nullable String jenismtr) {
+        this.jenismtr = jenismtr;
     }
 
     @Nullable
@@ -385,10 +385,10 @@ public class User implements Serializable {
                 ", startFrom=" + startFrom +
                 ", religion='" + religion + '\'' +
                 ", pendidikan='" + pendidikan + '\'' +
-                ", prodi='" + prodi + '\'' +
+                ", platmtr='" + platmtr + '\'' +
                 ", active=" + active +
-                ", instagram='" + instagram + '\'' +
-                ", facebook='" + facebook + '\'' +
+                ", merkmtr='" + merkmtr + '\'' +
+                ", jenismtr='" + jenismtr + '\'' +
                 ", createdAt=" + createdAt +
                 ", updateAt=" + updateAt +
                 ", location='" + location + '\'' +

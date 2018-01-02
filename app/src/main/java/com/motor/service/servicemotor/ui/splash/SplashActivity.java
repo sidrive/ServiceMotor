@@ -12,6 +12,7 @@ import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
 import com.motor.service.servicemotor.data.remote.model.User;
+import com.motor.service.servicemotor.ui.editprofil.EditProfilActivity;
 import com.motor.service.servicemotor.ui.login.LoginActivity;
 
 import javax.inject.Inject;
@@ -51,6 +52,11 @@ public class SplashActivity extends BaseActivity {
     public void showMainActivity(User user){
             MainActivity.startWithUser(this, user);
             finish();
+    }
+
+    public void showRegisterActivity(User user){
+        EditProfilActivity.startWithUser(this, user, true);
+        finish();
     }
 
     @Override

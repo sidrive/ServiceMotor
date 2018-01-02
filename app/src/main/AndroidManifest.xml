@@ -31,6 +31,14 @@
             android:name=".MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ui.editprofil.EditProfilActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden"/>
 
     </application>
 
