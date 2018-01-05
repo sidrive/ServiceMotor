@@ -35,7 +35,7 @@ public interface AppComponent {
 
         LoginActivityComponent plus(LoginActivityModule activityModule);
 
-        MainActivityComponent plus(MainActivityModule activityModule);
+//        MainActivityComponent plus(MainActivityModule activityModule);
 
         UserComponent plus(UserModule userModule);
 

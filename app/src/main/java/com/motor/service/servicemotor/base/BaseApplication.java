@@ -11,16 +11,19 @@ import android.support.multidex.MultiDexApplication;
 import com.google.firebase.FirebaseApp;
 import com.motor.service.servicemotor.MainActivity;
 import com.motor.service.servicemotor.base.config.DefaultConfig;
+import com.motor.service.servicemotor.data.main.MainComponent;
+import com.motor.service.servicemotor.data.main.MainModule;
 import com.motor.service.servicemotor.data.remote.firebase.FirebaseModule;
 import com.motor.service.servicemotor.data.remote.model.User;
 import com.motor.service.servicemotor.data.remote.network.NetworkModule;
 import com.motor.service.servicemotor.data.remote.user.UserComponent;
 import com.motor.service.servicemotor.data.remote.user.UserModule;
+import com.motor.service.servicemotor.ui.main.MainAct;
 
 public class BaseApplication extends MultiDexApplication {
     private AppComponent appComponent;
     private UserComponent userComponent;
-//    private MainComponent mainComponent;
+    private MainComponent mainComponent;
     private DefaultConfig defaultConfig;
 //    private LocationComponent locationComponent;
 //    private OrderDetailComponent orderDetailComponent;
@@ -76,14 +79,14 @@ public class BaseApplication extends MultiDexApplication {
 
     public void releaseUserComponent() {
         userComponent = null;
-    }
+    }*/
 
-    public MainComponent createMainComponent(MainActivity activity) {
+    public MainComponent createMainComponent(MainAct activity) {
         mainComponent = userComponent.plus(new MainModule(activity));
         return mainComponent;
     }
 
-    public MainComponent getMainComponent() {
+/*    public MainComponent getMainComponent() {
         return mainComponent;
     }
 

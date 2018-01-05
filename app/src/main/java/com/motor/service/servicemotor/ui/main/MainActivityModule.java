@@ -2,6 +2,7 @@ package com.motor.service.servicemotor.ui.main;
 
 import com.motor.service.servicemotor.base.annotation.ActivityScope;
 import com.motor.service.servicemotor.data.remote.UserService;
+import com.motor.service.servicemotor.data.remote.model.User;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,7 +23,7 @@ public class MainActivityModule {
 
     @ActivityScope
     @Provides
-    MainPresenter provideMainPresenter(UserService userService){
-    return new MainPresenter(activity,userService);
+    MainPresenter provideMainPresenter(UserService userService, User user){
+    return new MainPresenter(activity, userService, user);
     }
 }
