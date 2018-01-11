@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.motor.service.servicemotor.R;
@@ -17,6 +19,7 @@ import com.motor.service.servicemotor.data.remote.model.User;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by ikun on 02/01/18.
@@ -40,6 +43,7 @@ public class MainAct extends BaseActivity {
 
         String token = FirebaseInstanceId.getInstance().getToken();
         presenter.updateFCMToken(user.getUid(),token);
+        Log.e("Token","MainAct"+token);
     }
     @Override
     protected void setupActivityComponent() {
@@ -76,7 +80,11 @@ public class MainAct extends BaseActivity {
             {
                 presenter.updateFCMToken(user.getUid(),token);
             }
-
         }
     };
+
+    @OnClick(R.id.button2)
+    public void test(){
+        Toast.makeText(this, "Test test test", Toast.LENGTH_SHORT).show();
+    }
 }
