@@ -8,13 +8,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
 import com.motor.service.servicemotor.data.remote.model.User;
+import com.motor.service.servicemotor.ui.inputMotor.InputMotorActivity;
 
 import javax.inject.Inject;
 
@@ -85,6 +85,6 @@ public class MainAct extends BaseActivity {
 
     @OnClick(R.id.button2)
     public void test(){
-        Toast.makeText(this, "Test test test", Toast.LENGTH_SHORT).show();
+        InputMotorActivity.startWithUser(this, user);
     }
 }

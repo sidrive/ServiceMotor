@@ -9,8 +9,9 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.google.firebase.FirebaseApp;
-import com.motor.service.servicemotor.MainActivity;
 import com.motor.service.servicemotor.base.config.DefaultConfig;
+import com.motor.service.servicemotor.data.inputMotor.InputmotorComponent;
+import com.motor.service.servicemotor.data.inputMotor.InputmotorModule;
 import com.motor.service.servicemotor.data.main.MainComponent;
 import com.motor.service.servicemotor.data.main.MainModule;
 import com.motor.service.servicemotor.data.remote.firebase.FirebaseModule;
@@ -18,6 +19,7 @@ import com.motor.service.servicemotor.data.remote.model.User;
 import com.motor.service.servicemotor.data.remote.network.NetworkModule;
 import com.motor.service.servicemotor.data.remote.user.UserComponent;
 import com.motor.service.servicemotor.data.remote.user.UserModule;
+import com.motor.service.servicemotor.ui.inputMotor.InputMotorActivity;
 import com.motor.service.servicemotor.ui.main.MainAct;
 
 public class BaseApplication extends MultiDexApplication {
@@ -25,6 +27,7 @@ public class BaseApplication extends MultiDexApplication {
     private UserComponent userComponent;
     private MainComponent mainComponent;
     private DefaultConfig defaultConfig;
+    private InputmotorComponent inputmotorComponent;
 //    private LocationComponent locationComponent;
 //    private OrderDetailComponent orderDetailComponent;
 //    private SkillComponent skillComponent;
@@ -86,7 +89,12 @@ public class BaseApplication extends MultiDexApplication {
         return mainComponent;
     }
 
-/*    public MainComponent getMainComponent() {
+    public InputmotorComponent createInputMotorComponent(InputMotorActivity activity){
+        inputmotorComponent = userComponent.plus(new InputmotorModule(activity));
+        return inputmotorComponent;
+    }
+
+/*    public InputmotorComponent getMainComponent() {
         return mainComponent;
     }
 

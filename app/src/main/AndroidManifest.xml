@@ -43,6 +43,10 @@
             android:name=".ui.login.LoginActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ui.inputMotor.InputMotorActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden"/>
 
     </application>
 

@@ -1,8 +1,12 @@
 package com.motor.service.servicemotor.data.remote.user;
 
 import com.motor.service.servicemotor.base.annotation.UserScope;
+import com.motor.service.servicemotor.data.inputMotor.InputmotorComponent;
+import com.motor.service.servicemotor.data.inputMotor.InputmotorModule;
 import com.motor.service.servicemotor.data.main.MainComponent;
 import com.motor.service.servicemotor.data.main.MainModule;
+import com.motor.service.servicemotor.ui.inputMotor.InputMotorComponent;
+import com.motor.service.servicemotor.ui.inputMotor.InputMotorModule;
 import com.motor.service.servicemotor.ui.editprofil.EditProfilActivityComponent;
 import com.motor.service.servicemotor.ui.editprofil.EditProfilActivityModule;
 import com.motor.service.servicemotor.ui.main.MainActivityComponent;
@@ -25,12 +29,15 @@ public interface UserComponent {
 //    IntroActivityComponent plus(IntroActivityModule activityModule);
 //
     MainActivityComponent plus(MainActivityModule activityModule);
+    InputMotorComponent plus(InputMotorModule activityModule);
 //
-//    MainComponent plus(MainModule mainModule);
+//    InputmotorComponent plus(InputmotorModule mainModule);
 //
     EditProfilActivityComponent plus(EditProfilActivityModule activityModule);
 
     MainComponent plus(MainModule mainModule);
+
+    InputmotorComponent plus(InputmotorModule inputMotorModule);
 //
 //    SettingActivityComponent plus(SettingActivityModule activityModule);
 //

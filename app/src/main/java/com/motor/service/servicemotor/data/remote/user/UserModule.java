@@ -1,6 +1,7 @@
 package com.motor.service.servicemotor.data.remote.user;
 
 import com.motor.service.servicemotor.base.annotation.UserScope;
+import com.motor.service.servicemotor.data.remote.CategoryService;
 import com.motor.service.servicemotor.data.remote.model.User;
 
 import dagger.Module;
@@ -26,13 +27,13 @@ public class UserModule {
         return user;
     }
 
-    /*@Provides
+    @Provides
     @UserScope
     CategoryService provideCategoryService(){
         return new CategoryService();
     }
 
-    @Provides
+    /*@Provides
     @UserScope
     OrderService provideOrderService(){
         return new OrderService();
