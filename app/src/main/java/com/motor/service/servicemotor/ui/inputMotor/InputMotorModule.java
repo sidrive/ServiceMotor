@@ -1,6 +1,7 @@
 package com.motor.service.servicemotor.ui.inputMotor;
 
 import com.motor.service.servicemotor.base.annotation.ActivityScope;
+import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.remote.CategoryService;
 import com.motor.service.servicemotor.data.remote.UserService;
 import com.motor.service.servicemotor.data.remote.model.User;
@@ -25,7 +26,7 @@ public class InputMotorModule {
 
     @ActivityScope
     @Provides
-    InputMotorPresenter provideInputMotorPresenter(UserService userService, User user, CategoryService categoryService){
-        return new InputMotorPresenter(activity,userService,user,categoryService);
+    InputMotorPresenter provideInputMotorPresenter(UserService userService, User user, CategoryService categoryService, Motor motor){
+        return new InputMotorPresenter(activity,userService,user,categoryService,motor);
     }
 }

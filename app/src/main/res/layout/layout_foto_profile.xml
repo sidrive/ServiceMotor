@@ -10,14 +10,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_avatar"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            app:srcCompat="@drawable/googleg_disabled_color_18"
-            android:background="@drawable/button_radius_white_selector"/>
+            android:src="@color/colorSoft"
+            />
 
         <TextView
             android:id="@+id/txtnama_user"

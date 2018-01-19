@@ -1,11 +1,16 @@
 package com.motor.service.servicemotor.ui.inputMotor;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.motor.service.servicemotor.base.BasePresenter;
 import com.motor.service.servicemotor.data.model.Category;
+import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.remote.CategoryService;
+import com.motor.service.servicemotor.data.remote.MotorService;
 import com.motor.service.servicemotor.data.remote.UserService;
 import com.motor.service.servicemotor.data.remote.model.User;
 
@@ -21,12 +26,14 @@ public class InputMotorPresenter implements BasePresenter {
     UserService userService;
     User user;
     CategoryService categoryService;
+    Motor motor;
 
-    public InputMotorPresenter(InputMotorActivity activity, UserService userService, User user, CategoryService categoryService){
+    public InputMotorPresenter(InputMotorActivity activity, UserService userService, User user, CategoryService categoryService, Motor motor){
         this.activity = activity;
         this.userService = userService;
         this.user = user;
         this.categoryService = categoryService;
+        this.motor = motor;
     }
     @Override
     public void subscribe() {
@@ -98,6 +105,14 @@ public class InputMotorPresenter implements BasePresenter {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+        });
+    }
+
+    public void savemotor(Motor motor){
+        Log.e("InputMotor","idmotor "+motor.getIdmotor());
+        categoryService.saveMotor(motor).addOnCompleteListener(task -> activity.succesSaveMotor()).addOnFailureListener(e -> {
+            activity.showLoading(false);
+            Toast.makeText(activity, "Gagal menyimpan motor", Toast.LENGTH_SHORT).show();
         });
     }
 }

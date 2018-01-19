@@ -17,9 +17,12 @@ import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
 import com.motor.service.servicemotor.data.model.Category;
+import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.remote.model.User;
+import com.motor.service.servicemotor.ui.main.MainAct;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -35,14 +38,29 @@ public class InputMotorActivity extends BaseActivity {
 
     @Bind(R.id.txtMerk)
     TextView txtmerk;
+
     @Bind(R.id.txtType)
     TextView txttype;
+
     @Bind(R.id.txtSeri)
     TextView txtseri;
+
     @Bind(R.id.txtnama_user)
     TextView txtnama;
+
     @Bind(R.id.img_avatar)
     ImageView imgAvatar;
+    @Bind(R.id.txt_plat)
+    TextView txtplat;
+
+    @Bind(R.id.txt_tahunmotor)
+    TextView thnmotor;
+
+    @Bind(R.id.txt_norangka)
+    TextView norangka;
+
+    @Inject
+    Motor motor;
 
     @Inject
     InputMotorPresenter presenter;
@@ -73,6 +91,7 @@ public class InputMotorActivity extends BaseActivity {
         ButterKnife.bind(this);
         txtnama.setText(String.valueOf(user.getFull_name()));
         initProfilePhoto();
+
     }
 
     @Override
@@ -236,10 +255,10 @@ public class InputMotorActivity extends BaseActivity {
                         Log.d("smtime img's not loaded",  "n dis tex's not di");
                         return false;
                     }
-                })
-                        .placeholder(R.color.colorSoft)
+                });
+                        /*.placeholder(R.color.colorSoft)
                         .dontAnimate()
-                        .into(imgAvatar);
+                        .into(imgAvatar);*/
 
                 Glide.with(this)
                         .load(user.getPhoto_url())
@@ -248,5 +267,54 @@ public class InputMotorActivity extends BaseActivity {
                         .into(imgAvatar);
             }
         }
+    }
+
+    @OnClick(R.id.btn_simpan)
+    void saveMotor(){
+        validate();
+    }
+
+
+    public void validate(){
+
+        motor.setUserid(user.getUid());
+        motor.setIdmotor(String.valueOf(txtmerk.getText())+String.valueOf(txtplat.getText()).toUpperCase());
+        motor.setMerk(String.valueOf(txtmerk.getText()));
+        motor.setType(String.valueOf(txttype.getText()));
+        motor.setSeri(String.valueOf(txtseri.getText()));
+        motor.setPlat(String.valueOf(txtplat.getText()).toUpperCase());
+        motor.setTahun_buat(String.valueOf(thnmotor.getText()));
+        motor.setNo_rangka(String.valueOf(norangka.getText()));
+        presenter.savemotor(motor);
+
+    }
+
+    public void succesSaveMotor() {
+        showLoading(false);
+        String title = "Motor disimpan";
+        String desc = "Kami sendang melakukan update data motor";
+        int icon = R.drawable.ic_alarm_on;
+        showAlertDialog(title, desc, icon);
+    }
+
+    void showLoading(boolean b) {
+    }
+
+    private void showAlertDialog(String title, String desc, int icon) {
+        final Intent intent = new Intent(this, MainAct.class);
+        intent.putExtra("motor", "motor");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(desc)
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // continue with delete
+                    dialog.dismiss();
+                    startActivity(intent);
+
+                })
+                .setIcon(icon)
+                .show();
     }
 }
