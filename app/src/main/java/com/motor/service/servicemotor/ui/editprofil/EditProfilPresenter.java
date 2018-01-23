@@ -24,7 +24,7 @@ public class EditProfilPresenter implements BasePresenter {
     FirebaseImageService firebaseImageService;
     FirebaseUserService firebaseUserService;
 
-    public EditProfilPresenter(EditProfilActivity activity, UserService userService, FirebaseUserService firebaseUserService){
+    public EditProfilPresenter(EditProfilActivity activity, UserService userService, FirebaseUserService firebaseUserService, FirebaseImageService firebaseImageService){
         this.activity = activity;
         this.userService = userService;
         this.firebaseImageService = firebaseImageService;
@@ -66,7 +66,7 @@ public class EditProfilPresenter implements BasePresenter {
 //        userService.updateUserPayment(partnerPayment);
 //    }
 
-    /*public void uploadAvatar(final User user, byte[] data, final Uri uri){
+    public void uploadAvatar(final User user, byte[] data, final Uri uri){
         StorageReference avatarPartnerRef = firebaseImageService.getUserImageRefOriginal(user.getUid());
 
         UploadTask uploadTask = avatarPartnerRef.putFile(uri);
@@ -82,5 +82,5 @@ public class EditProfilPresenter implements BasePresenter {
             activity.successUploadImage(downloadUrl.toString());
 
         });
-    }*/
+    }
 }

@@ -27,7 +27,7 @@ public class EditProfilActivityModule {
 
     @ActivityScope
     @Provides
-    EditProfilPresenter provideEditProfilPresenter(UserService userService, FirebaseUserService firebaseUserService){
-        return new EditProfilPresenter(activity, userService, firebaseUserService);
+    EditProfilPresenter provideEditProfilPresenter(UserService userService, FirebaseUserService firebaseUserService, FirebaseImageService firebaseImageService){
+        return new EditProfilPresenter(activity, userService, firebaseUserService, firebaseImageService);
     }
 }

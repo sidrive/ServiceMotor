@@ -581,7 +581,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
             String updateAt = dateFormat.format(date);
 
             if (imgOriginal != null) {
-                finish();/*presenter.uploadAvatar(user, imgSmall, imgOriginal);*/
+                presenter.uploadAvatar(user, imgSmall, imgOriginal);
             } else {
                 presenter.updateProfile(user);
             }

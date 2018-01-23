@@ -2,6 +2,7 @@ package com.motor.service.servicemotor.data.remote.firebase;
 
 import android.app.Application;
 
+import com.motor.service.servicemotor.data.remote.FirebaseImageService;
 import com.motor.service.servicemotor.data.remote.FirebaseUserService;
 import com.motor.service.servicemotor.data.remote.UserService;
 
@@ -28,9 +29,9 @@ public class FirebaseModule {
         return new UserService(application);
     }
 
-    /*@Provides
+    @Provides
     @Singleton
     public FirebaseImageService provideFirebaseImageService(Application application) {
         return new FirebaseImageService(application);
-    }*/
+    }
 }
