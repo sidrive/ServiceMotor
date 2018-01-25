@@ -17,15 +17,18 @@
             android:id="@+id/imageView3"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_google_g_logo"
+            android:src="@mipmap/ic_launcher_motorbike"
             android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lupa Service Motor, Lupa Bayar Tagihan atau \n Lupa Bayar Pajak Motor? \n Kini bukan alasan lagi!!"
+            android:textStyle="italic"
+            android:textAlignment="center"/>
+
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:srcCompat="@drawable/button_radius_white_hover"
-        android:layout_gravity="bottom"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

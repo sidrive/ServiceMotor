@@ -48,8 +48,12 @@ public class InputMotorActivity extends BaseActivity {
     @Bind(R.id.txtnama_user)
     TextView txtnama;
 
+    @Bind(R.id.imglogo)
+    ImageView imglogo;
+
     @Bind(R.id.img_avatar)
     ImageView imgAvatar;
+
     @Bind(R.id.txt_plat)
     TextView txtplat;
 
@@ -120,7 +124,7 @@ public class InputMotorActivity extends BaseActivity {
     }
 
     @OnClick(R.id.ln_seri)
-    void showCategorySeri(){
+    void showCategoryVarian(){
         showSeri();
     }
 
@@ -129,11 +133,24 @@ public class InputMotorActivity extends BaseActivity {
         alert.setTitle("Pilih Merk Motor");
         alert.setSingleChoiceItems(merk, merkVal, (dialog, which) -> {
             handleSelectCategoryMerk(which);
+            changeLogo();
             dialog.dismiss();
 
         });
         alert.show();
 
+    }
+
+    private void changeLogo(){
+        if((txtmerk.getText().toString()).equalsIgnoreCase("HONDA")){
+            imglogo.setImageResource(R.drawable.ic_logo_honda);
+        }if((txtmerk.getText().toString()).equalsIgnoreCase("YAMAHA")){
+            imglogo.setImageResource(R.drawable.ic_logo_yamaha);
+        }if((txtmerk.getText().toString()).equalsIgnoreCase("SUZUKI")){
+            imglogo.setImageResource(R.drawable.ic_logo_suzuki);
+        }if((txtmerk.getText().toString()).equalsIgnoreCase("KAWASAKI")){
+            imglogo.setImageResource(R.drawable.ic_logo_kawasaki);
+        }
     }
 
     private void handleSelectCategoryMerk(int pos){
