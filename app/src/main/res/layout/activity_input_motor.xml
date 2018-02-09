@@ -138,7 +138,6 @@
                 android:orientation="vertical">
 
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="No. Plat" />
@@ -152,21 +151,31 @@
                     android:inputType="textPersonName" />
 
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tahun Pembuatan" />
-
-                <EditText
-                    android:id="@+id/txt_tahunmotor"
+                    android:text="Tgl Pajak"
+                    android:layout_marginTop="8dp"/>
+                <Button
+                    android:id="@+id/btn_pajak"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Tahun"
-                    android:inputType="number" />
+                    android:layout_height="40dp"
+                    android:hint="tgl Pajak"/>
 
                 <TextView
 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tahun Pembuatan"
+                    android:layout_marginTop="8dp"/>
+
+                <Button
+                    android:id="@+id/btn_tahunmtr"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint=""/>
+
+                <TextView
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="No. Rangka" />

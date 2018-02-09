@@ -30,4 +30,8 @@ public class CategoryService {
     public Task<Void> saveMotor(Motor motor){
         return databaseRef.child("motors").child(motor.getUserid()).child(motor.getIdmotor()).setValue(motor);
     }
+
+    public DatabaseReference getMotor(String id){
+        return databaseRef.child("motors").child(id);
+    }
 }

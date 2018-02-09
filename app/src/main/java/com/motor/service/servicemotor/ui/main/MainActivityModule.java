@@ -1,6 +1,7 @@
 package com.motor.service.servicemotor.ui.main;
 
 import com.motor.service.servicemotor.base.annotation.ActivityScope;
+import com.motor.service.servicemotor.data.remote.CategoryService;
 import com.motor.service.servicemotor.data.remote.UserService;
 import com.motor.service.servicemotor.data.remote.model.User;
 
@@ -23,7 +24,7 @@ public class MainActivityModule {
 
     @ActivityScope
     @Provides
-    MainPresenter provideMainPresenter(UserService userService, User user){
-    return new MainPresenter(activity, userService, user);
+    MainPresenter provideMainPresenter(UserService userService, User user, CategoryService categoryService){
+    return new MainPresenter(activity, userService, user, categoryService);
     }
 }

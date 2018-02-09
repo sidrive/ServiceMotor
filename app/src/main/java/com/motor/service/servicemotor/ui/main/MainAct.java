@@ -16,16 +16,17 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
+import com.motor.service.servicemotor.data.adapter.AdapterStatusMotor;
+import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.remote.model.User;
 import com.motor.service.servicemotor.ui.editprofil.EditProfilActivity;
 import com.motor.service.servicemotor.ui.inputMotor.InputMotorActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -57,11 +58,16 @@ public class MainAct extends BaseActivity {
     @Bind(R.id.txtserviceakhir)
     TextView txtserviceakhir;
 
+
     @Inject
     MainPresenter presenter;
 
     @Inject
     User user;
+
+    @Inject
+    Motor motor;
+    private AdapterStatusMotor adapterStatusMotor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -73,11 +79,10 @@ public class MainAct extends BaseActivity {
 
         String token = FirebaseInstanceId.getInstance().getToken();
         presenter.updateFCMToken(user.getUid(),token);
-        Log.e("Token","MainAct"+token);
-
         init();
         initProfilePhoto();
-        initGraph();
+        initMotor();
+        initPager();
     }
     @Override
     protected void setupActivityComponent() {
@@ -127,22 +132,22 @@ public class MainAct extends BaseActivity {
         EditProfilActivity.startWithUser(this, user,true);
     }
 
-    public void initGraph(){
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
-        graph.addSeries(series);
+    public void initPager(){
     }
 
     public void init(){
+        Log.e("MainAct", "init: " + user.getFull_name());
         txtnama.setText(String.valueOf(user.getFull_name()));
         txtemail.setText(String.valueOf(user.getEmail()));
         txtphone.setText(String.valueOf(user.getPhone()));
+    }
+
+    public void initMotor(){
+    presenter.getMotor(user);
+    }
+
+    public void initListMotor(List<Motor> listMotor){
+        adapterStatusMotor = new AdapterStatusMotor((ArrayList<Motor>) listMotor,this);
     }
 
     public void initProfilePhoto(){

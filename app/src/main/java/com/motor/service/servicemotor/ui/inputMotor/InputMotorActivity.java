@@ -1,11 +1,18 @@
 package com.motor.service.servicemotor.ui.inputMotor;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +28,10 @@ import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.remote.model.User;
 import com.motor.service.servicemotor.ui.main.MainAct;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -57,11 +68,16 @@ public class InputMotorActivity extends BaseActivity {
     @Bind(R.id.txt_plat)
     TextView txtplat;
 
-    @Bind(R.id.txt_tahunmotor)
-    TextView thnmotor;
+
 
     @Bind(R.id.txt_norangka)
     TextView norangka;
+
+    @Bind(R.id.btn_pajak)
+    Button btnpajak;
+
+    @Bind(R.id.btn_tahunmtr)
+    Button btnthnmtr;
 
     @Inject
     Motor motor;
@@ -88,6 +104,8 @@ public class InputMotorActivity extends BaseActivity {
     String typeID;
     String seriID;
 
+    Calendar myCalendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +114,33 @@ public class InputMotorActivity extends BaseActivity {
         txtnama.setText(String.valueOf(user.getFull_name()));
         initProfilePhoto();
 
+        myCalendar = Calendar.getInstance();
+        btnpajak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(InputMotorActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, month);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                        String formatTanggal = "dd MMMM";
+                        SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
+                        btnpajak.setText(sdf.format(myCalendar.getTime()));
+                    }
+                },
+                        myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+
     }
+
+
+
 
     @Override
     protected void setupActivityComponent() {
@@ -129,14 +173,14 @@ public class InputMotorActivity extends BaseActivity {
     }
 
     private void showMerk(){
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this,R.style.MyAlertDialogStyle);
         alert.setTitle("Pilih Merk Motor");
         alert.setSingleChoiceItems(merk, merkVal, (dialog, which) -> {
             handleSelectCategoryMerk(which);
             changeLogo();
             dialog.dismiss();
-
         });
+        alert.setIcon(R.drawable.ic_2000px_motorbike_svg);
         alert.show();
 
     }
@@ -161,13 +205,14 @@ public class InputMotorActivity extends BaseActivity {
     }
 
     private void showType() {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this,R.style.MyAlertDialogStyle);
         alert.setTitle("Pilih Type Motor");
         alert.setSingleChoiceItems(type, typeVal, (dialog, which) -> {
             handleSelectSubCategoryType(which);
             dialog.dismiss();
 
         });
+        alert.setIcon(R.drawable.ic_2000px_motorbike_svg);
         alert.show();
     }
 
@@ -181,13 +226,14 @@ public class InputMotorActivity extends BaseActivity {
     }
 
     private void showSeri() {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this,R.style.MyAlertDialogStyle);
         alert.setTitle("Pilih Seri");
         alert.setSingleChoiceItems(seri, seriVal, (dialog, which) -> {
             handleSelectLevelSeri(which);
             dialog.dismiss();
 
         });
+        alert.setIcon(R.drawable.ic_2000px_motorbike_svg);
         alert.show();
     }
 
@@ -300,8 +346,9 @@ public class InputMotorActivity extends BaseActivity {
         motor.setType(String.valueOf(txttype.getText()));
         motor.setSeri(String.valueOf(txtseri.getText()));
         motor.setPlat(String.valueOf(txtplat.getText()).toUpperCase());
-        motor.setTahun_buat(String.valueOf(thnmotor.getText()));
+        motor.setTahun_buat(String.valueOf(btnthnmtr.getText()));
         motor.setNo_rangka(String.valueOf(norangka.getText()));
+        motor.setTahun_pajak(String.valueOf(btnpajak.getText()));
         presenter.savemotor(motor);
 
     }
@@ -309,7 +356,7 @@ public class InputMotorActivity extends BaseActivity {
     public void succesSaveMotor() {
         showLoading(false);
         String title = "Motor disimpan";
-        String desc = "Kami sendang melakukan update data motor";
+        String desc = "Kami sedang melakukan update data motor";
         int icon = R.drawable.ic_alarm_on;
         showAlertDialog(title, desc, icon);
     }
@@ -333,5 +380,37 @@ public class InputMotorActivity extends BaseActivity {
                 })
                 .setIcon(icon)
                 .show();
+    }
+
+
+    @OnClick(R.id.btn_tahunmtr)
+    void showYear(){
+        final AlertDialog.Builder d = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.year_picker_dialog, null);
+        d.setTitle("Pilih Tahun Pembuatan Motor Sesuai BPKB");
+        d.setView(dialogView);
+        final NumberPicker numberPicker = (NumberPicker) dialogView.findViewById(R.id.dialog_number_picker);
+        myCalendar = Calendar.getInstance();
+        int yearNow = myCalendar.get(Calendar.YEAR);
+        Log.e("InputMotorActivity", "showYear: " + myCalendar.get(Calendar.YEAR));
+        numberPicker.setMaxValue(yearNow);
+        numberPicker.setMinValue(2004);
+        numberPicker.setWrapSelectorWheel(false);
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+//                Log.d(TAG, "onValueChange: ");
+            }
+        });
+        d.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.e("activity", "onClick: " + numberPicker.getValue());
+                btnthnmtr.setText(String.valueOf(numberPicker.getValue()));
+            }
+        });
+        AlertDialog alertDialog = d.create();
+        alertDialog.show();
     }
 }

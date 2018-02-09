@@ -32,9 +32,12 @@ public class Motor {
     @NonNull
     private String no_rangka;
 
+    @NonNull
+    private String tahun_pajak;
+
     public Motor(){}
 
-    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka) {
+    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull String tahun_pajak) {
         this.idmotor = idmotor;
         this.userid = userid;
         this.merk = merk;
@@ -43,6 +46,7 @@ public class Motor {
         this.plat = plat;
         this.tahun_buat = tahun_buat;
         this.no_rangka = no_rangka;
+        this.tahun_pajak = tahun_pajak;
     }
 
     @NonNull
@@ -115,5 +119,29 @@ public class Motor {
 
     public void setUserid(@NonNull String userid) {
         this.userid = userid;
+    }
+
+    @NonNull
+    public String getTahun_pajak() {
+        return tahun_pajak;
+    }
+
+    public void setTahun_pajak(@NonNull String tahun_pajak) {
+        this.tahun_pajak = tahun_pajak;
+    }
+
+    @Override
+    public String toString() {
+        return "Motor{" +
+                "idmotor='" + idmotor + '\'' +
+                ", userid='" + userid + '\'' +
+                ", merk='" + merk + '\'' +
+                ", type='" + type + '\'' +
+                ", seri='" + seri + '\'' +
+                ", plat='" + plat + '\'' +
+                ", tahun_buat='" + tahun_buat + '\'' +
+                ", no_rangka='" + no_rangka + '\'' +
+                ", tahun_pajak='" + tahun_pajak + '\'' +
+                '}';
     }
 }
