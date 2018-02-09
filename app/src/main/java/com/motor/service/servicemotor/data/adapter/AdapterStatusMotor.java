@@ -41,13 +41,18 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         View view = inflater.inflate(R.layout.list_item_motor, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
+
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Motor motor = getItem(position);
-        holder.txtplat.setText(motor.getPlat());
-        Log.e("AdapterStatusMotor", "onBindViewHolder: " + motor);
+        Log.e("AdapterStatusMotor", "onBindViewHolder: " + position+motor.getPlat());
+
+        holder.txtplat.setText(motor.getSeri()+" "+motor.getPlat());
+        holder.txtmerk.setText(motor.getMerk());
+        holder.txttype.setText(motor.getSeri());
+
     }
     @Override
     public int getItemCount() {

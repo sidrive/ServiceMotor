@@ -51,8 +51,10 @@ public class MainPresenter implements BasePresenter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Motor> listMotor = new ArrayList<Motor>();
+//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Motor motor = postSnapshot.getValue(Motor.class);
+                    Log.e("MainPresenter", "onDataChange: " + dataSnapshot.getChildren());
                     listMotor.add(motor);
 //                    Log.e("MainPresenter", "onDataChange: " + listMotor);
                 }

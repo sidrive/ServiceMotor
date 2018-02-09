@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,6 +61,9 @@ public class MainAct extends BaseActivity {
     @Bind(R.id.txtserviceakhir)
     TextView txtserviceakhir;
 
+    @Bind(R.id.listmotor)
+    RecyclerView lsmotor;
+
 
     @Inject
     MainPresenter presenter;
@@ -81,6 +87,7 @@ public class MainAct extends BaseActivity {
         presenter.updateFCMToken(user.getUid(),token);
         init();
         initProfilePhoto();
+        initRecycleView();
         initMotor();
         initPager();
     }
@@ -142,12 +149,22 @@ public class MainAct extends BaseActivity {
         txtphone.setText(String.valueOf(user.getPhone()));
     }
 
+    private void initRecycleView() {
+        lsmotor.setHasFixedSize(true);
+        lsmotor.addItemDecoration(
+                new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        lsmotor.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        lsmotor.setNestedScrollingEnabled(false);
+    }
+
     public void initMotor(){
     presenter.getMotor(user);
     }
 
     public void initListMotor(List<Motor> listMotor){
         adapterStatusMotor = new AdapterStatusMotor((ArrayList<Motor>) listMotor,this);
+//        adapterStatusMotor.UpdateMotor(listMotor);
+        lsmotor.setAdapter(adapterStatusMotor);
     }
 
     public void initProfilePhoto(){
