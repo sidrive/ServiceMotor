@@ -181,7 +181,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/bg_shadow">
+            android:background="@drawable/bg_shadow"
+            android:layout_marginBottom="45dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/listmotor"

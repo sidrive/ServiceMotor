@@ -51,7 +51,6 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
 
         holder.txtplat.setText(motor.getSeri()+" "+motor.getPlat());
         holder.txtmerk.setText(motor.getMerk());
-        holder.txttype.setText(motor.getSeri());
 
     }
     @Override
@@ -65,8 +64,6 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         TextView txtplat;
         @Bind(R.id.txtMerk)
         TextView txtmerk;
-        @Bind(R.id.txtType)
-        TextView txttype;
 
         public ViewHolder(View itemView) {
             super(itemView);
