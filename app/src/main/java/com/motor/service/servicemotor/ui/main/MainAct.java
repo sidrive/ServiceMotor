@@ -5,8 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.midi.MidiOutputPort;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -162,7 +164,7 @@ public class MainAct extends BaseActivity {
     }
 
     public void initListMotor(List<Motor> listMotor){
-        adapterStatusMotor = new AdapterStatusMotor((ArrayList<Motor>) listMotor,this);
+        adapterStatusMotor = new AdapterStatusMotor((ArrayList<Motor>) listMotor,this, this);
 //        adapterStatusMotor.UpdateMotor(listMotor);
         lsmotor.setAdapter(adapterStatusMotor);
     }
@@ -195,5 +197,38 @@ public class MainAct extends BaseActivity {
                         .into(imgAvatar);
             }
         }
+    }
+
+    public void updateKM(Motor motor){
+        presenter.updateMotor(motor);
+    }
+
+    public void succesSaveMotor() {
+        showLoading(false);
+        String title = "Motor disimpan";
+        String desc = "Kami sedang melakukan update data motor";
+        int icon = R.drawable.ic_alarm_on;
+        showAlertDialog(title, desc, icon);
+    }
+
+    void showLoading(boolean b) {
+    }
+
+    private void showAlertDialog(String title, String desc, int icon) {
+        final Intent intent = new Intent(this, MainAct.class);
+        intent.putExtra("motor", "motor");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(desc)
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // continue with delete
+                    dialog.dismiss();
+                    startActivity(intent);
+
+                })
+                .setIcon(icon)
+                .show();
     }
 }

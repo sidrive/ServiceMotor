@@ -68,4 +68,12 @@ public class MainPresenter implements BasePresenter {
             }
         });
     }
+
+    public void updateMotor(Motor motor){
+        categoryService.saveMotor(motor).addOnCompleteListener(task -> activity.succesSaveMotor()).addOnFailureListener(e -> {
+            activity.showLoading(false);
+            Toast.makeText(activity, "Gagal menyimpan motor", Toast.LENGTH_SHORT).show();
+        });
+
+    }
 }
