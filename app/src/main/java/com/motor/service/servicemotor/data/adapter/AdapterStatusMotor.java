@@ -1,6 +1,9 @@
 package com.motor.service.servicemotor.data.adapter;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -9,17 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.data.model.Motor;
+import com.motor.service.servicemotor.utils.ProgressBarAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import static com.facebook.GraphRequest.TAG;
 
 /**
  * Created by ikun on 08/02/18.
@@ -47,12 +56,54 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Motor motor = getItem(position);
-        Log.e("AdapterStatusMotor", "onBindViewHolder: " + position+motor.getPlat());
+        Log.e(TAG, "onBindViewHolder: "+motor);
 
         holder.txtplat.setText(motor.getSeri()+" "+motor.getPlat());
         holder.txtmerk.setText(motor.getMerk());
 
+//        holder.btnUpdateKm.setOnClickListener(onC);
+
+
+        float from = motor.getKm_NextService();
+        float from1 = motor.getKm_now();
+        float hasil = (from1/from)*100;
+        Log.e(TAG, "onBindViewHolder: "+hasil);
+        ProgressBarAnimation anim = new ProgressBarAnimation(holder.progresKilometer, hasil-5, hasil);
+        anim.setDuration(1000);
+        anim.setRepeatMode(ValueAnimator.RESTART);
+        anim.setRepeatCount(ValueAnimator.INFINITE);
+        anim.setInterpolator(new LinearInterpolator());
+        holder.progresKilometer.setSecondaryProgress((int) hasil);
+        holder.progresKilometer.startAnimation(anim);
+
+
+
+
+        final GradientDrawable background = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{Color.BLUE, Color.RED, Color.BLUE, Color.RED});
+        holder.bar.setBackground(background);
+        holder.progresKilometer.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(final View v, final int left, final int top, final int right, final int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                background.setBounds(-2 * v.getWidth(), 0, v.getWidth(), v.getHeight());
+                ValueAnimator animation = ValueAnimator.ofInt(0, 2 * v.getWidth());
+                animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        background.setBounds(-2 * v.getWidth() + (int) animation.getAnimatedValue(), 0, v.getWidth() + (int) animation.getAnimatedValue(), v.getHeight());
+                    }
+                });
+                animation.setRepeatMode(ValueAnimator.RESTART);
+                animation.setInterpolator(new LinearInterpolator());
+                animation.setRepeatCount(ValueAnimator.INFINITE);
+                animation.setDuration(3000);
+                animation.start();
+            }
+        });
+
     }
+
+
+
     @Override
     public int getItemCount() {
         return mitem.size();
@@ -64,6 +115,12 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         TextView txtplat;
         @Bind(R.id.txtMerk)
         TextView txtmerk;
+        @Bind(R.id.progresKilometer)
+        ProgressBar progresKilometer;
+        @Bind(R.id.progress)
+        View bar;
+        @Bind(R.id.btnUpdateKm)
+        Button btnUpdateKm;
 
         public ViewHolder(View itemView) {
             super(itemView);

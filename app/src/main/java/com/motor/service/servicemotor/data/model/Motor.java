@@ -15,6 +15,33 @@ public class Motor {
     private String userid;
 
     @NonNull
+    private String jenis_service;
+
+    @NonNull
+    private String ket_service;
+
+    @NonNull
+    private int km_NextService;
+
+    @NonNull
+    private int km_now;
+
+    @NonNull
+    private int km_ratarata;
+
+    @NonNull
+    private Boolean motor_utama;
+
+    @NonNull
+    private String photo_url;
+
+    @NonNull
+    private Long tgl_nextService;
+
+    @NonNull
+    private String tgl_service;
+
+    @NonNull
     private String merk;
 
     @NonNull
@@ -37,9 +64,19 @@ public class Motor {
 
     public Motor(){}
 
-    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull String tahun_pajak) {
+
+    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String jenis_service, @NonNull String ket_service, @NonNull int km_NextService, @NonNull int km_now, @NonNull int km_ratarata, @NonNull Boolean motor_utama, @NonNull String photo_url, @NonNull Long tgl_nextService, @NonNull String tgl_service, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull String tahun_pajak) {
         this.idmotor = idmotor;
         this.userid = userid;
+        this.jenis_service = jenis_service;
+        this.ket_service = ket_service;
+        this.km_NextService = km_NextService;
+        this.km_now = km_now;
+        this.km_ratarata = km_ratarata;
+        this.motor_utama = motor_utama;
+        this.photo_url = photo_url;
+        this.tgl_nextService = tgl_nextService;
+        this.tgl_service = tgl_service;
         this.merk = merk;
         this.type = type;
         this.seri = seri;
@@ -130,11 +167,101 @@ public class Motor {
         this.tahun_pajak = tahun_pajak;
     }
 
+    @NonNull
+    public String getJenis_service() {
+        return jenis_service;
+    }
+
+    public void setJenis_service(@NonNull String jenis_service) {
+        this.jenis_service = jenis_service;
+    }
+
+    @NonNull
+    public String getKet_service() {
+        return ket_service;
+    }
+
+    public void setKet_service(@NonNull String ket_service) {
+        this.ket_service = ket_service;
+    }
+
+    @NonNull
+    public int getKm_NextService() {
+        return km_NextService;
+    }
+
+    public void setKm_NextService(@NonNull int km_NextService) {
+        this.km_NextService = km_NextService;
+    }
+
+    @NonNull
+    public int getKm_now() {
+        return km_now;
+    }
+
+    public void setKm_now(@NonNull int km_now) {
+        this.km_now = km_now;
+    }
+
+    @NonNull
+    public int getKm_ratarata() {
+        return km_ratarata;
+    }
+
+    public void setKm_ratarata(@NonNull int km_ratarata) {
+        this.km_ratarata = km_ratarata;
+    }
+
+    @NonNull
+    public Boolean getMotor_utama() {
+        return motor_utama;
+    }
+
+    public void setMotor_utama(@NonNull Boolean motor_utama) {
+        this.motor_utama = motor_utama;
+    }
+
+    @NonNull
+    public String getPhoto_url() {
+        return photo_url;
+    }
+
+    public void setPhoto_url(@NonNull String photo_url) {
+        this.photo_url = photo_url;
+    }
+
+    @NonNull
+    public Long getTgl_nextService() {
+        return tgl_nextService;
+    }
+
+    public void setTgl_nextService(@NonNull Long tgl_nextService) {
+        this.tgl_nextService = tgl_nextService;
+    }
+
+    @NonNull
+    public String getTgl_service() {
+        return tgl_service;
+    }
+
+    public void setTgl_service(@NonNull String tgl_service) {
+        this.tgl_service = tgl_service;
+    }
+
     @Override
     public String toString() {
         return "Motor{" +
                 "idmotor='" + idmotor + '\'' +
                 ", userid='" + userid + '\'' +
+                ", jenis_service='" + jenis_service + '\'' +
+                ", ket_service='" + ket_service + '\'' +
+                ", km_NextService=" + km_NextService +
+                ", km_now=" + km_now +
+                ", km_ratarata=" + km_ratarata +
+                ", motor_utama=" + motor_utama +
+                ", photo_url='" + photo_url + '\'' +
+                ", tgl_nextService=" + tgl_nextService +
+                ", tgl_service='" + tgl_service + '\'' +
                 ", merk='" + merk + '\'' +
                 ", type='" + type + '\'' +
                 ", seri='" + seri + '\'' +
