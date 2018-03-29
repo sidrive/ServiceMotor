@@ -1,6 +1,8 @@
 package com.motor.service.servicemotor.base;
 
 import com.motor.service.servicemotor.data.remote.firebase.FirebaseModule;
+import com.motor.service.servicemotor.data.remote.motor.MotorComponent;
+import com.motor.service.servicemotor.data.remote.motor.MotorModule;
 import com.motor.service.servicemotor.data.remote.network.NetworkModule;
 import com.motor.service.servicemotor.data.remote.user.UserComponent;
 import com.motor.service.servicemotor.data.remote.user.UserModule;
@@ -38,6 +40,7 @@ public interface AppComponent {
 //        MainActivityComponent plus(MainActivityModule activityModule);
 
         UserComponent plus(UserModule userModule);
+        MotorComponent plus(MotorModule motorModule);
 
         Retrofit retrofit();
 }

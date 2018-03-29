@@ -10,15 +10,21 @@ import android.support.multidex.MultiDexApplication;
 
 import com.google.firebase.FirebaseApp;
 import com.motor.service.servicemotor.base.config.DefaultConfig;
+import com.motor.service.servicemotor.data.editMotor.EditMotorComponent;
+import com.motor.service.servicemotor.data.editMotor.EditMotorModule;
 import com.motor.service.servicemotor.data.inputMotor.InputmotorComponent;
 import com.motor.service.servicemotor.data.inputMotor.InputmotorModule;
 import com.motor.service.servicemotor.data.main.MainComponent;
 import com.motor.service.servicemotor.data.main.MainModule;
+import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.remote.firebase.FirebaseModule;
 import com.motor.service.servicemotor.data.remote.model.User;
+import com.motor.service.servicemotor.data.remote.motor.MotorComponent;
+import com.motor.service.servicemotor.data.remote.motor.MotorModule;
 import com.motor.service.servicemotor.data.remote.network.NetworkModule;
 import com.motor.service.servicemotor.data.remote.user.UserComponent;
 import com.motor.service.servicemotor.data.remote.user.UserModule;
+import com.motor.service.servicemotor.ui.editmotor.EditMotorActivity;
 import com.motor.service.servicemotor.ui.inputMotor.InputMotorActivity;
 import com.motor.service.servicemotor.ui.main.MainAct;
 
@@ -26,8 +32,10 @@ public class BaseApplication extends MultiDexApplication {
     private AppComponent appComponent;
     private UserComponent userComponent;
     private MainComponent mainComponent;
+    private MotorComponent motorComponent;
     private DefaultConfig defaultConfig;
     private InputmotorComponent inputmotorComponent;
+    private EditMotorComponent editMotorComponent;
 //    private LocationComponent locationComponent;
 //    private OrderDetailComponent orderDetailComponent;
 //    private SkillComponent skillComponent;
@@ -76,6 +84,15 @@ public class BaseApplication extends MultiDexApplication {
         return userComponent;
     }
 
+    public MotorComponent createMotorComponent(Motor motor) {
+        motorComponent = appComponent.plus(new MotorModule(motor));
+        return motorComponent;
+    }
+
+    public MotorComponent getMotorComponent(){
+        return motorComponent;
+    }
+
     /*public MapActivityComponent getMapActivityComponent(){
         return mapActivityComponent;
     }
@@ -92,6 +109,11 @@ public class BaseApplication extends MultiDexApplication {
     public InputmotorComponent createInputMotorComponent(InputMotorActivity activity){
         inputmotorComponent = userComponent.plus(new InputmotorModule(activity));
         return inputmotorComponent;
+    }
+
+    public EditMotorComponent createEditMotorComponent(EditMotorActivity activity){
+        editMotorComponent = userComponent.plus(new EditMotorModule(activity));
+        return editMotorComponent;
     }
 
 /*    public InputmotorComponent getMainComponent() {

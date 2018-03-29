@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.data.model.Motor;
+import com.motor.service.servicemotor.ui.editmotor.EditMotorActivity;
 import com.motor.service.servicemotor.ui.main.MainAct;
 import com.motor.service.servicemotor.utils.ProgressBarAnimation;
 
@@ -183,7 +184,9 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(mcontext, "Toast", Toast.LENGTH_LONG).show();
+           Motor motor = getItem(this.getAdapterPosition());
+            Log.e(TAG, "onClick: "+motor );
+            EditMotorActivity.startWithMotor(activity,motor);
         }
     }
 
