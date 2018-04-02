@@ -17,6 +17,7 @@ import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
 import com.motor.service.servicemotor.data.remote.model.User;
+import com.motor.service.servicemotor.ui.main.MainAct;
 
 import javax.inject.Inject;
 
@@ -78,12 +79,12 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void showLoginSuccess(User user) {
-        MainActivity.startWithUser(this, user);
+        MainAct.startWithUser(this, user);
         finish();
     }
 
     public void showRegisterUser(User user){
-        MainActivity.startWithUser(this, user);
+        MainAct.startWithUser(this, user);
         /*EditProfileActivity.startWithUser(this, user, true);*/
         Toast.makeText(this, "Berhasil Masuk", Toast.LENGTH_LONG).show();
         finish();

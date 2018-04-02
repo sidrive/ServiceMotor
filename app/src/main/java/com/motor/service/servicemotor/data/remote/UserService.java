@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.remote.model.EmailConfirmation;
 import com.motor.service.servicemotor.data.remote.model.User;
 
@@ -46,6 +47,10 @@ public class UserService {
 
     public void deleteUser(String key) {
 
+    }
+
+    public Task<Void> updateMotor(Motor motor) {
+        return databaseRef.child("motors").child(motor.getUserid()).child(motor.getIdmotor()).setValue(motor);
     }
 
     //users

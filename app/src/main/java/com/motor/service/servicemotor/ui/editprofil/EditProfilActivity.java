@@ -50,6 +50,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import pub.devrel.easypermissions.EasyPermissions.PermissionCallbacks;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import com.motor.service.servicemotor.ui.main.MainAct;
 import com.motor.service.servicemotor.utils.DateFormater;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImage.ActivityResult;
@@ -213,7 +214,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
 
         if (id == android.R.id.home) {
       /*finish();*/
-            MainActivity.startWithUser(this, user);
+            MainAct.startWithUser(this, user);
         }
 
         if (id == R.id.menu_done) {
@@ -477,10 +478,10 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
         if (register) {
             if (user.isAcceptTOS()) {
                 /*VerificationActivity.startWithUser(this, user);*/
-                MainActivity.startWithUser(this, user);
+                MainAct.startWithUser(this, user);
 
             } else {
-                MainActivity.startWithUser(this, user);
+                MainAct.startWithUser(this, user);
             }
         } else {
             Toast.makeText(this, "Data Tersimpan", Toast.LENGTH_SHORT).show();
