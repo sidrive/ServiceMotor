@@ -220,6 +220,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kilometer Sekarang" />
+
+                <EditText
+                    android:id="@+id/txt_kmNow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="0 KM"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp">
 

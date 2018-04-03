@@ -67,6 +67,8 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
 
         holder.txtplat.setText(motor.getSeri()+" "+motor.getPlat());
         holder.txtmerk.setText(motor.getMerk());
+        holder.txtTglPajak.setText(motor.getTahun_pajak());
+        holder.txtServiceAkhir.setText(motor.getTgl_service());
 
 
         float from = motor.getKm_NextService();
@@ -78,32 +80,34 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         anim.setRepeatMode(ValueAnimator.RESTART);
         anim.setRepeatCount(ValueAnimator.INFINITE);
         anim.setInterpolator(new LinearInterpolator());
+
         holder.progresKilometer.setSecondaryProgress((int) hasil);
         holder.progresKilometer.startAnimation(anim);
+        holder.txtKmNow.setText(motor.getKm_now()+"/"+motor.getKm_NextService()+" KM");
 
 
 
 
-        final GradientDrawable background = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{Color.BLUE, Color.RED, Color.BLUE, Color.RED});
-        holder.bar.setBackground(background);
-        holder.progresKilometer.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(final View v, final int left, final int top, final int right, final int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                background.setBounds(-2 * v.getWidth(), 0, v.getWidth(), v.getHeight());
-                ValueAnimator animation = ValueAnimator.ofInt(0, 2 * v.getWidth());
-                animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        background.setBounds(-2 * v.getWidth() + (int) animation.getAnimatedValue(), 0, v.getWidth() + (int) animation.getAnimatedValue(), v.getHeight());
-                    }
-                });
-                animation.setRepeatMode(ValueAnimator.RESTART);
-                animation.setInterpolator(new LinearInterpolator());
-                animation.setRepeatCount(ValueAnimator.INFINITE);
-                animation.setDuration(3000);
-                animation.start();
-            }
-        });
+//        final GradientDrawable background = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{Color.BLUE, Color.RED, Color.BLUE, Color.RED});
+//        holder.bar.setBackground(background);
+//        holder.progresKilometer.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(final View v, final int left, final int top, final int right, final int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                background.setBounds(-2 * v.getWidth(), 0, v.getWidth(), v.getHeight());
+//                ValueAnimator animation = ValueAnimator.ofInt(0, 2 * v.getWidth());
+//                animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                    @Override
+//                    public void onAnimationUpdate(ValueAnimator animation) {
+//                        background.setBounds(-2 * v.getWidth() + (int) animation.getAnimatedValue(), 0, v.getWidth() + (int) animation.getAnimatedValue(), v.getHeight());
+//                    }
+//                });
+//                animation.setRepeatMode(ValueAnimator.RESTART);
+//                animation.setInterpolator(new LinearInterpolator());
+//                animation.setRepeatCount(ValueAnimator.INFINITE);
+//                animation.setDuration(3000);
+//                animation.start();
+//            }
+//        });
 
 
         holder.btnUpdateKm.setOnClickListener(new OnClickListener() {
@@ -123,7 +127,7 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
 
                 final EditText userInput = (EditText) promptsView
                         .findViewById(R.id.txtUpdatekm);
-
+                userInput.setText(String.valueOf(motor.getKm_now()));
                 // set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
@@ -166,12 +170,24 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
 
         @Bind(R.id.txtPlat)
         TextView txtplat;
+
         @Bind(R.id.txtMerk)
         TextView txtmerk;
+
+        @Bind(R.id.txtTglPajak)
+        TextView txtTglPajak;
+
+        @Bind(R.id.txtserviceakhir)
+        TextView txtServiceAkhir;
+
+        @Bind(R.id.txtKmnow)
+        TextView txtKmNow;
+
         @Bind(R.id.progresKilometer)
         ProgressBar progresKilometer;
-        @Bind(R.id.progress)
-        View bar;
+
+
+
         @Bind(R.id.btnUpdateKm)
         Button btnUpdateKm;
 
