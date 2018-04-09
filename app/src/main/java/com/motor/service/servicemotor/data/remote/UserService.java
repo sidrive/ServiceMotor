@@ -59,6 +59,10 @@ public class UserService {
         databaseRef.child("users").child(uid).child("userTokens").child(token).setValue(true);
     }
 
+    public DatabaseReference getService(String id){
+        return databaseRef.child("service").child(id);
+    }
+
     public void sendEmailConfirmation(EmailConfirmation emailConfirmation){
         databaseRef.child("confirmationEmailRequest").push().setValue(emailConfirmation);
     }

@@ -61,6 +61,10 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden"/>
         <activity
+            android:name=".ui.historyservice.HistoryServiceActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
 
