@@ -79,6 +79,12 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
     @BindString(R.string.error_field_required)
     String strErrRequired;
 
+    @Bind(R.id.viewPrrogress)
+    LinearLayout viewProgress;
+
+    @Bind(R.id.lnAddService)
+    LinearLayout lnAddService;
+
     @Bind(R.id.chNo)
     RadioButton chNo;
 
@@ -188,6 +194,11 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
             }
         });
 
+        initInputService();
+    }
+
+    private void initInputService() {
+        lnAddService.setVisibility(View.GONE);
     }
 
 
@@ -377,6 +388,7 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
 
     @OnClick(R.id.btn_simpan)
     void saveMotor(){
+//        showLoading(true);
         validate();
     }
 
@@ -482,6 +494,12 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
     }
 
     void showLoading(boolean b) {
+        if(b){
+            viewProgress.setVisibility(View.VISIBLE);
+        }else {
+            viewProgress.setVisibility(View.GONE);
+        }
+        Log.e(TAG, "showLoading: "+b );
     }
 
     private void showAlertDialog(String title, String desc, int icon) {
@@ -732,4 +750,6 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
         }
 
     }
+
+
 }

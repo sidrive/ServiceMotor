@@ -123,6 +123,7 @@ public class InputMotorPresenter implements BasePresenter {
     }
 
     public void uploadAvatar(final Motor motor, byte[] data, final Uri uri){
+        activity.showLoading(true);
         StorageReference avatarPartnerRef = firebaseImageService.getMotorImageRefOriginal(motor.getUserid(),motor.getIdmotor());
 
         UploadTask uploadTask = avatarPartnerRef.putFile(uri);

@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        layout="@layout/view_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,6 +38,8 @@
             android:layout_marginBottom="30dp"
             android:clickable="true"
             app:srcCompat="@android:drawable/ic_menu_camera" />
+
+
 
     </RelativeLayout>
 
@@ -340,5 +347,33 @@
             android:text="SIMPAN"
             android:background="@color/com_facebook_messenger_blue"/>
     </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/viewPrrogress"
+        android:background="@color/colorShadowWhite"
+        android:visibility="gone">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Large.Circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:SpinKit_Color="@color/colorAccent" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/lnAddService">
+        <include layout="@layout/conten_detail_motor"            />
+    </LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
