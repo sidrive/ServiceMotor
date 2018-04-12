@@ -33,6 +33,11 @@ public class FirebaseImageService {
         return avatarRef;
     }
 
+    public StorageReference getServiceImageRefOriginal(String uid,String motorid,String serviceid){
+        StorageReference avatarRef = storageReference.child("services/"+uid+"/"+motorid+"/"+serviceid+"/nota.jpg");
+        return avatarRef;
+    }
+
     public StorageReference getImageRefThumb(String uid){
         StorageReference avatarRefThumb = storageReference.child("users/"+uid+"/thumb_profile.jpg");
         return avatarRefThumb;

@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.motor.service.servicemotor.data.model.Motor;
+import com.motor.service.servicemotor.data.model.Service;
 
 /**
  * Created by ikun on 12/01/18.
@@ -33,5 +34,9 @@ public class CategoryService {
 
     public DatabaseReference getMotor(String id){
         return databaseRef.child("motors").child(id);
+    }
+
+    public Task<Void> saveService(Service service){
+        return databaseRef.child("service").child(service.getIdmotor()).child(service.getIdservice()).setValue(service);
     }
 }

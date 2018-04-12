@@ -54,6 +54,9 @@ public class AdapterService extends RecyclerView.Adapter<AdapterService.ViewHold
         Log.e(TAG, "onBindViewHolder: "+service );
 
         String tglService = DateFormater.getDate(service.getTglService(),"d MMMM Y");
+        if(service.getPhoto_url() == null){
+            holder.btnViewNota.setVisibility(View.GONE);
+        }
 
         holder.txtIdmotor.setText(service.getIdmotor());
         holder.txtJenisService.setText(service.getJenisService());

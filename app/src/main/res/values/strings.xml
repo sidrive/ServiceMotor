@@ -8,4 +8,15 @@
         <item>Laki laki</item>
         <item>Perempuan</item>
     </string-array>
+
+    <string-array name="list_jenisservice">
+        <item>Service &amp; Ganti Oli</item>
+        <item>Ganti Oli</item>
+        <item>Service Lain</item>
+    </string-array>
+
+    <string-array name="list_ketservice">
+        <item>Replacement/Penggantian</item>
+        <item>Service</item>
+    </string-array>
 </resources>

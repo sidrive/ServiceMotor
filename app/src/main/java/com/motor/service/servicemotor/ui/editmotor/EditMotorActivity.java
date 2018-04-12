@@ -28,6 +28,7 @@ import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.ui.historyservice.HistoryServiceActivity;
 import com.motor.service.servicemotor.ui.dialog.DialogUploadOption;
 import com.motor.service.servicemotor.ui.dialog.DialogUploadOption.OnDialogUploadOptionClickListener;
+import com.motor.service.servicemotor.ui.inputservice.InputServiceActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -404,5 +405,10 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
     @OnClick(R.id.fabHistoryService)
     void showHistory(){
         HistoryServiceActivity.startWithMotor(this,motor);
+    }
+
+    @OnClick(R.id.fabService)
+    void addService(){
+        InputServiceActivity.startWithMotor(this,motor);
     }
 }
