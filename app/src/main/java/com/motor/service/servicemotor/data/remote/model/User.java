@@ -30,49 +30,39 @@ public class User implements Serializable {
     public String gender;
     @Nullable
     public long birthday;
-    @Nullable
-    public boolean verified;
+
     @Nullable
     public double latitude;
     @Nullable
     public double longitude;
     @Nullable
     public String fullAddress;
-    @Nullable
-    public int totalSkill;
-    @Nullable
-    public float review;
-    @Nullable
-    public int startFrom;
-    @Nullable
-    public String religion;
-    @Nullable
-    public String pendidikan;
+
     @Nullable
     public String platmtr;
-    @Nullable
-    public boolean active;
+
     @Nullable
     public String merkmtr;
     @Nullable
     public String jenismtr;
+
+    @Nullable
+    public int totalmtr;
+
     @Nullable
     public long createdAt;
     @Nullable
     public long updateAt;
-    @Nullable
-    public String location;
-    @Nullable
-    public String about;
+
     @Nullable
     public boolean acceptTOS;
-    @Nullable
-    public String userType;
+
+
+    @Nullable String nomor_sim;
 
     @Nullable
     public String token;
-    @Nullable
-    public int saldo;
+
     public static User newInstance(FirebaseUser firebaseUser, UserInfo provider) {
         User user = new User(firebaseUser.getUid());
         user.setProvider(provider.getProviderId());
@@ -94,7 +84,7 @@ public class User implements Serializable {
         this.uid = uid;
     }
 
-    public User(String uid, String phone, String email, String provider, String photo_url, String full_name, String token) {
+    public User(String uid, String phone, String email, String provider, String photo_url, String full_name, String token, String nomor_sim, int totalmtr) {
         this.uid = uid;
         this.phone = phone;
         this.email = email;
@@ -102,16 +92,10 @@ public class User implements Serializable {
         this.photo_url = photo_url;
         this.full_name = full_name;
         this.token = token;
+        this.nomor_sim = nomor_sim;
+        this.totalmtr = totalmtr;
     }
 
-    @Nullable
-    public int getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(@Nullable int saldo) {
-        this.saldo = saldo;
-    }
 
     @Nullable
     public String getToken() {
@@ -194,14 +178,6 @@ public class User implements Serializable {
         this.birthday = birthday;
     }
 
-    @Nullable
-    public boolean isVerified() {
-        return verified;
-    }
-
-    public void setVerified(@Nullable boolean verified) {
-        this.verified = verified;
-    }
 
     @Nullable
     public double getLatitude() {
@@ -230,50 +206,7 @@ public class User implements Serializable {
         this.fullAddress = fullAddress;
     }
 
-    @Nullable
-    public int getTotalSkill() {
-        return totalSkill;
-    }
 
-    public void setTotalSkill(@Nullable int totalSkill) {
-        this.totalSkill = totalSkill;
-    }
-
-    @Nullable
-    public float getReview() {
-        return review;
-    }
-
-    public void setReview(@Nullable float review) {
-        this.review = review;
-    }
-
-    @Nullable
-    public int getStartFrom() {
-        return startFrom;
-    }
-
-    public void setStartFrom(@Nullable int startFrom) {
-        this.startFrom = startFrom;
-    }
-
-    @Nullable
-    public String getReligion() {
-        return religion;
-    }
-
-    public void setReligion(@Nullable String religion) {
-        this.religion = religion;
-    }
-
-    @Nullable
-    public String getPendidikan() {
-        return pendidikan;
-    }
-
-    public void setPendidikan(@Nullable String pendidikan) {
-        this.pendidikan = pendidikan;
-    }
 
     @Nullable
     public String getPlatMotor() {
@@ -284,14 +217,7 @@ public class User implements Serializable {
         this.platmtr = platmtr;
     }
 
-    public void setActive(@Nullable boolean active) {
-        this.active = active;
-    }
 
-    @Nullable
-    public boolean isActive() {
-        return active;
-    }
 
     @Nullable
     public String getMerkMotor() {
@@ -312,6 +238,15 @@ public class User implements Serializable {
     }
 
     @Nullable
+    public int getTotalMotor() {
+        return totalmtr;
+    }
+
+    public void setTotalMotor(@Nullable int totalmtr) {
+        this.totalmtr = totalmtr;
+    }
+
+    @Nullable
     public long getCreatedAt() {
         return createdAt;
     }
@@ -329,23 +264,7 @@ public class User implements Serializable {
         this.updateAt = updateAt;
     }
 
-    @Nullable
-    public String getLocation() {
-        return location;
-    }
 
-    public void setLocation(@Nullable String location) {
-        this.location = location;
-    }
-
-    @Nullable
-    public String getAbout() {
-        return about;
-    }
-
-    public void setAbout(@Nullable String about) {
-        this.about = about;
-    }
 
     @Nullable
     public boolean isAcceptTOS() {
@@ -356,13 +275,15 @@ public class User implements Serializable {
         this.acceptTOS = acceptTOS;
     }
 
+
+
     @Nullable
-    public String getUserType() {
-        return userType;
+    public String getNosim() {
+        return nomor_sim;
     }
 
-    public void setUserType(@Nullable String userType) {
-        this.userType = userType;
+    public void setNosim(@Nullable String nosim) {
+        this.nomor_sim = nosim;
     }
 
     @Override
@@ -376,25 +297,18 @@ public class User implements Serializable {
                 ", full_name='" + full_name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", birthday=" + birthday +
-                ", verified=" + verified +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", fullAddress='" + fullAddress + '\'' +
-                ", totalSkill=" + totalSkill +
-                ", review=" + review +
-                ", startFrom=" + startFrom +
-                ", religion='" + religion + '\'' +
-                ", pendidikan='" + pendidikan + '\'' +
                 ", platmtr='" + platmtr + '\'' +
-                ", active=" + active +
                 ", merkmtr='" + merkmtr + '\'' +
                 ", jenismtr='" + jenismtr + '\'' +
+                ", totalmtr=" + totalmtr +
                 ", createdAt=" + createdAt +
                 ", updateAt=" + updateAt +
-                ", location='" + location + '\'' +
-                ", about='" + about + '\'' +
                 ", acceptTOS=" + acceptTOS +
-                ", userType='" + userType + '\'' +
+                ", nosim='" + nomor_sim + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

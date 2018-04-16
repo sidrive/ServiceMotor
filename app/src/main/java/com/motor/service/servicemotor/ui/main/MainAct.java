@@ -24,6 +24,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
+import com.motor.service.servicemotor.data.adapter.AdapterProfileUser;
 import com.motor.service.servicemotor.data.adapter.AdapterStatusMotor;
 import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.remote.model.User;
@@ -51,20 +52,11 @@ public class MainAct extends BaseActivity {
     @Bind(R.id.img_avatar)
     ImageView imgAvatar;
 
-    @Bind(R.id.txtemail)
-    TextView txtemail;
-
-    @Bind(R.id.txtphone)
-    TextView txtphone;
-
-    @Bind(R.id.txtjmlmotor)
-    TextView jmlmotor;
-
-    @Bind(R.id.txtserviceakhir)
-    TextView txtserviceakhir;
-
     @Bind(R.id.listmotor)
     RecyclerView lsmotor;
+
+    @Bind(R.id.listprofile)
+    RecyclerView lsprofile;
 
 
     @Inject
@@ -75,7 +67,9 @@ public class MainAct extends BaseActivity {
 
     @Inject
     Motor motor;
+
     private AdapterStatusMotor adapterStatusMotor;
+    private AdapterProfileUser adapterProfileUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -87,10 +81,13 @@ public class MainAct extends BaseActivity {
 
         String token = FirebaseInstanceId.getInstance().getToken();
         presenter.updateFCMToken(user.getUid(),token);
-        init();
+
+        txtnama.setText(user.getFull_name());
+
         initProfilePhoto();
         initRecycleView();
         initMotor();
+        initDataProfile();
         initPager();
     }
     @Override
@@ -144,12 +141,7 @@ public class MainAct extends BaseActivity {
     public void initPager(){
     }
 
-    public void init(){
-        Log.e("MainAct", "init: " + user.getFull_name());
-        txtnama.setText(String.valueOf(user.getFull_name()));
-        txtemail.setText(String.valueOf(user.getEmail()));
-        txtphone.setText(String.valueOf(user.getPhone()));
-    }
+
 
     private void initRecycleView() {
         lsmotor.setHasFixedSize(true);
@@ -157,6 +149,12 @@ public class MainAct extends BaseActivity {
                 new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
         lsmotor.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         lsmotor.setNestedScrollingEnabled(false);
+
+        lsprofile.setHasFixedSize(true);
+        lsprofile.addItemDecoration(
+                new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        lsprofile.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        lsprofile.setNestedScrollingEnabled(false);
     }
 
     public void initMotor(){
@@ -167,6 +165,14 @@ public class MainAct extends BaseActivity {
         adapterStatusMotor = new AdapterStatusMotor((ArrayList<Motor>) listMotor,this, this);
 //        adapterStatusMotor.UpdateMotor(listMotor);
         lsmotor.setAdapter(adapterStatusMotor);
+    }
+
+    public void initDataProfile(){
+        List<User> listUser = new ArrayList<User>();
+        listUser.add(user);
+        adapterProfileUser = new AdapterProfileUser((ArrayList<User>) listUser,this, this);
+//        adapterStatusMotor.UpdateMotor(listMotor);
+        lsprofile.setAdapter(adapterProfileUser);
     }
 
     public void initProfilePhoto(){
