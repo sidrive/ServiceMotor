@@ -49,12 +49,39 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/bg_radius_white_selector"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_radius_white_selector"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Status Nota"/>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <RadioButton
+                        android:id="@+id/rdNotaLama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nota Lama" />
+
+                    <RadioButton
+                        android:id="@+id/rdNotaBaru"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nota Baru" />
+                </RadioGroup>
 
                 <TextView
                     android:layout_width="match_parent"

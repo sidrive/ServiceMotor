@@ -25,6 +25,7 @@ import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.ui.editmotor.EditMotorActivity;
 import com.motor.service.servicemotor.ui.main.MainAct;
+import com.motor.service.servicemotor.utils.DateFormater;
 import com.motor.service.servicemotor.utils.ProgressBarAnimation;
 
 import java.util.ArrayList;
@@ -65,15 +66,17 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         Motor motor = getItem(position);
         Log.e(TAG, "onBindViewHolder: "+motor);
 
+        String tglService = DateFormater.getDate(motor.getTgl_service(),"d MMMM Y");
+
         holder.txtplat.setText(motor.getSeri()+" "+motor.getPlat());
         holder.txtmerk.setText(motor.getMerk());
         holder.txtTglPajak.setText(motor.getTahun_pajak());
-        holder.txtServiceAkhir.setText(motor.getTgl_service());
+        holder.txtServiceAkhir.setText(tglService);
 
 
-        float from = motor.getKm_NextService();
-        float from1 = motor.getKm_now();
-        float hasil = (from1/from)*100;
+        float from = motor.getKm_NextService()-motor.getKm_now();
+        float from1 = 2500-from;
+        float hasil = (from1/2500)*100;
         Log.e(TAG, "onBindViewHolder: "+hasil);
         ProgressBarAnimation anim = new ProgressBarAnimation(holder.progresKilometer, hasil-2, hasil);
         anim.setDuration(1000);
@@ -84,31 +87,6 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         holder.progresKilometer.setSecondaryProgress((int) hasil);
         holder.progresKilometer.startAnimation(anim);
         holder.txtKmNow.setText(motor.getKm_now()+"/"+motor.getKm_NextService()+" KM");
-
-
-
-
-//        final GradientDrawable background = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{Color.BLUE, Color.RED, Color.BLUE, Color.RED});
-//        holder.bar.setBackground(background);
-//        holder.progresKilometer.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//            @Override
-//            public void onLayoutChange(final View v, final int left, final int top, final int right, final int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                background.setBounds(-2 * v.getWidth(), 0, v.getWidth(), v.getHeight());
-//                ValueAnimator animation = ValueAnimator.ofInt(0, 2 * v.getWidth());
-//                animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                    @Override
-//                    public void onAnimationUpdate(ValueAnimator animation) {
-//                        background.setBounds(-2 * v.getWidth() + (int) animation.getAnimatedValue(), 0, v.getWidth() + (int) animation.getAnimatedValue(), v.getHeight());
-//                    }
-//                });
-//                animation.setRepeatMode(ValueAnimator.RESTART);
-//                animation.setInterpolator(new LinearInterpolator());
-//                animation.setRepeatCount(ValueAnimator.INFINITE);
-//                animation.setDuration(3000);
-//                animation.start();
-//            }
-//        });
-
 
         holder.btnUpdateKm.setOnClickListener(new OnClickListener() {
 

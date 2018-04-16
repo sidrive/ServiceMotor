@@ -22,7 +22,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
@@ -48,6 +50,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -70,6 +73,12 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
 
     @BindString(R.string.error_field_required)
     String strErrRequired;
+
+    @Bind(R.id.rdNotaBaru)
+    RadioButton rdNotaBaru;
+
+    @Bind(R.id.rdNotaLama)
+    RadioButton rdNotaLama;
 
     @Bind(R.id.txtMotor)
     TextView txtMotor;
@@ -245,9 +254,17 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
         });
     }
 
+
     @OnClick(R.id.btn_simpan)
     void saveService(){
-        validate();
+
+        if(rdNotaBaru.isChecked()){
+            validate();
+        }
+        if(rdNotaLama.isChecked()){
+            validateLama();
+        }
+
     }
 
     private void validate() {
@@ -300,6 +317,7 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
             service.setKmservice(Integer.valueOf(txtKmService.getText().toString()));
 
             motor.setKm_now(Integer.valueOf(txtKmService.getText().toString()));
+            motor.setTgl_service(myCalender.getTimeInMillis());
 
             if(txtJenisService.getText().toString().equals("Service & Ganti Oli")){
                 motor.setKm_NextService(Integer.valueOf(txtKmService.getText().toString())+2500);
@@ -315,6 +333,92 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
 
             }if(txtJenisService.getText().toString().equals("Ganti Oli")){
                 motor.setKm_NextService(Integer.valueOf(txtKmService.getText().toString())+2500);
+
+                if (imgOriginal != null) {
+                    presenter.uploadAvatar(motor,service, imgSmall, imgOriginal);
+                    Log.e(TAG, "validate: "+motor.getKm_NextService());
+
+                } else {
+                    presenter.updateMotor(motor,service);
+                    Log.e(TAG, "validate: "+motor.getKm_NextService());
+                }
+
+            }else{
+
+                if (imgOriginal != null) {
+                    presenter.uploadAvatar(motor,service, imgSmall, imgOriginal);
+
+                } else {
+                    presenter.updateMotor(motor,service);
+                }
+            }
+
+        }
+    }
+
+    private void validateLama() {
+        txtJenisService.setError(null);
+        txtKetService.setError(null);
+        txtKmService.setError(null);
+        txtPart.setError(null);
+        btnTglService.setError(null);
+
+        boolean cancel = false;
+        View focusView = null;
+
+        if(TextUtils.isEmpty(txtJenisService.getText().toString()) || txtJenisService.getText().toString().equals("Pilih Jenis Service")){
+            txtJenisService.setError(strErrRequired);
+            focusView = txtJenisService;
+            cancel = true;
+        }
+        if(TextUtils.isEmpty(txtKetService.getText().toString()) || txtKetService.getText().toString().equals("Pilih Keterangan Service")){
+            txtKetService.setError(strErrRequired);
+            focusView = txtKetService;
+            cancel = true;
+        }
+        if(TextUtils.isEmpty(txtPart.getText().toString())){
+            txtPart.setError(strErrRequired);
+            focusView = txtPart;
+            cancel = true;
+        }
+        if(TextUtils.isEmpty(btnTglService.getText().toString()) || btnTglService.getText().toString().equals("Tanggal Service")){
+            btnTglService.setError(strErrRequired);
+            focusView = btnTglService;
+            cancel = true;
+        }
+        if(TextUtils.isEmpty(txtKmService.getText().toString())){
+            txtKmService.setError(strErrRequired);
+            focusView = txtKmService;
+            cancel = true;
+        }
+        if(cancel){
+            focusView.requestFocus();
+        }else{
+
+            Random rand = new Random();
+            String oid = Integer.toString(rand.nextInt(99999));
+
+            service.setIdmotor(motor.getIdmotor().toString());
+            service.setIdservice(motor.getIdmotor().toString()+String.valueOf(oid));
+            service.setJenisService(txtJenisService.getText().toString());
+            service.setKeterangan(txtKetService.getText().toString()+" "+txtPart.getText().toString());
+            service.setTglService(myCalender.getTimeInMillis());
+            service.setKmservice(Integer.valueOf(txtKmService.getText().toString()));
+
+
+
+            if(txtJenisService.getText().toString().equals("Service & Ganti Oli")){
+
+                if (imgOriginal != null) {
+                    presenter.uploadAvatar(motor,service, imgSmall, imgOriginal);
+                    Log.e(TAG, "validate: "+motor.getKm_NextService());
+
+                } else {
+                    presenter.updateMotor(motor,service);
+                    Log.e(TAG, "validate: "+motor.getKm_NextService());
+                }
+
+            }if(txtJenisService.getText().toString().equals("Ganti Oli")){
 
                 if (imgOriginal != null) {
                     presenter.uploadAvatar(motor,service, imgSmall, imgOriginal);

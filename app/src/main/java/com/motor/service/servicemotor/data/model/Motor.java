@@ -39,7 +39,7 @@ public class Motor {
     private Long tgl_nextService;
 
     @NonNull
-    private String tgl_service;
+    private Long tgl_service;
 
     @NonNull
     private String merk;
@@ -65,7 +65,7 @@ public class Motor {
     public Motor(){}
 
 
-    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String jenis_service, @NonNull String ket_service, @NonNull int km_NextService, @NonNull int km_now, @NonNull int km_ratarata, @NonNull Boolean motor_utama, @NonNull String photo_url, @NonNull Long tgl_nextService, @NonNull String tgl_service, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull String tahun_pajak) {
+    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String jenis_service, @NonNull String ket_service, @NonNull int km_NextService, @NonNull int km_now, @NonNull int km_ratarata, @NonNull Boolean motor_utama, @NonNull String photo_url, @NonNull Long tgl_nextService, @NonNull Long tgl_service, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull String tahun_pajak) {
         this.idmotor = idmotor;
         this.userid = userid;
         this.jenis_service = jenis_service;
@@ -240,11 +240,11 @@ public class Motor {
     }
 
     @NonNull
-    public String getTgl_service() {
+    public Long getTgl_service() {
         return tgl_service;
     }
 
-    public void setTgl_service(@NonNull String tgl_service) {
+    public void setTgl_service(@NonNull Long tgl_service) {
         this.tgl_service = tgl_service;
     }
 
@@ -261,7 +261,7 @@ public class Motor {
                 ", motor_utama=" + motor_utama +
                 ", photo_url='" + photo_url + '\'' +
                 ", tgl_nextService=" + tgl_nextService +
-                ", tgl_service='" + tgl_service + '\'' +
+                ", tgl_service=" + tgl_service +
                 ", merk='" + merk + '\'' +
                 ", type='" + type + '\'' +
                 ", seri='" + seri + '\'' +
