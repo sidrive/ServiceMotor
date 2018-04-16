@@ -26,6 +26,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
@@ -107,6 +108,9 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
     @Bind(R.id.btn_tglservice)
     Button btnTglService;
 
+    @Bind(R.id.imageView2)
+    ImageView imgAvatar;
+
     @Bind(R.id.imgNota)
     ImageView imgNota;
 
@@ -134,6 +138,20 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
         txtMotor.setText(motor.getSeri().toString().toUpperCase()+" "+motor.getPlat().toString().toUpperCase());
         charJenService = getResources().getStringArray(R.array.list_jenisservice);
         charKetService = getResources().getStringArray(R.array.list_ketservice);
+
+        initPicMotor();
+    }
+
+    private void initPicMotor() {
+        if(motor.getPhoto_url() != null){
+            if (!motor.getPhoto_url().equals("NOT")) {
+                Glide.with(this)
+                        .load(motor.getPhoto_url())
+                        .placeholder(R.color.colorSoft)
+                        .dontAnimate()
+                        .into(imgAvatar);
+            }
+        }
     }
 
 
