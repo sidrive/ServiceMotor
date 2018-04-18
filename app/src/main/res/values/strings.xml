@@ -3,6 +3,7 @@
     <string name="masuk_dengan_google">Masuk Dengan Google</string>
     <string name="error_field_required">Harus di isi!!</string>
     <string name="ijin_camera">Membutuhkan ijin untuk akses kamera</string>
+    <string name="ijin_lokasi">Membutuhkan ijin untuk akses lokasi</string>
 
     <string-array name="list_gender">
         <item>Laki laki</item>
@@ -19,4 +20,8 @@
         <item>Replacement/Penggantian</item>
         <item>Service</item>
     </string-array>
+
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyCD-Nbz0nz8O0yDXa3wjkyqTxwTZbI2y28
+    </string>
 </resources>

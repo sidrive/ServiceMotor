@@ -257,9 +257,10 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
                 new DatePickerDialog(InputServiceActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        myCalendar.set(Calendar.YEAR, year);
+
                         myCalender.set(Calendar.MONTH, month);
                         myCalender.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        myCalender.set(Calendar.YEAR,year);
 
                         String formatTanggal = "dd MMMM Y";
                         SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);

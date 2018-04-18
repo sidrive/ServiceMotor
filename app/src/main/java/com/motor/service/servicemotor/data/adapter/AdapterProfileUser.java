@@ -48,11 +48,11 @@ public class AdapterProfileUser extends Adapter<AdapterProfileUser.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         User user = getItem(position);
-        Log.e(TAG, "onBindViewHolder: "+user.getNosim());
+        Log.e(TAG, "onBindViewHolder: "+user.getNomor_sim());
 
         holder.txtphone.setText(user.getPhone());
         holder.txtemail.setText(user.getEmail());
-        holder.txtnosim.setText(user.getNosim());
+        holder.txtnosim.setText(user.getNomor_sim());
         holder.txtjmlmotor.setText(String.valueOf(user.getTotalMotor()));
 
     }

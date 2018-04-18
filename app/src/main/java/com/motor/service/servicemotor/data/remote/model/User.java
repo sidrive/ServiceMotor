@@ -37,17 +37,17 @@ public class User implements Serializable {
     public double longitude;
     @Nullable
     public String fullAddress;
+    @Nullable
+    public String namaJalan;
+    @Nullable
+    public String kota;
+    @Nullable
+    public String provinsi;
+    @Nullable
+    public String kodepos;
 
     @Nullable
-    public String platmtr;
-
-    @Nullable
-    public String merkmtr;
-    @Nullable
-    public String jenismtr;
-
-    @Nullable
-    public int totalmtr;
+    public int totalMotor;
 
     @Nullable
     public long createdAt;
@@ -84,17 +84,31 @@ public class User implements Serializable {
         this.uid = uid;
     }
 
-    public User(String uid, String phone, String email, String provider, String photo_url, String full_name, String token, String nomor_sim, int totalmtr) {
+    public User(@NonNull String uid, String phone, String email, String provider, String photo_url, String full_name, String gender, long birthday, double latitude, double longitude, String fullAddress, String namaJalan, String kota, String provinsi, String kodepos, int totalMotor, long createdAt, long updateAt, boolean acceptTOS, String nomor_sim, String token) {
         this.uid = uid;
         this.phone = phone;
         this.email = email;
         this.provider = provider;
         this.photo_url = photo_url;
         this.full_name = full_name;
-        this.token = token;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.fullAddress = fullAddress;
+        this.namaJalan = namaJalan;
+        this.kota = kota;
+        this.provinsi = provinsi;
+        this.kodepos = kodepos;
+        this.totalMotor = totalMotor;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+        this.acceptTOS = acceptTOS;
         this.nomor_sim = nomor_sim;
-        this.totalmtr = totalmtr;
+        this.token = token;
     }
+
+
 
 
     @Nullable
@@ -207,43 +221,13 @@ public class User implements Serializable {
     }
 
 
-
-    @Nullable
-    public String getPlatMotor() {
-        return platmtr;
-    }
-
-    public void setPlatMotor(@Nullable String platmtr) {
-        this.platmtr = platmtr;
-    }
-
-
-
-    @Nullable
-    public String getMerkMotor() {
-        return merkmtr;
-    }
-
-    public void setMerkMotor(@Nullable String merkmtr) {
-        this.merkmtr = merkmtr;
-    }
-
-    @Nullable
-    public String getJenisMotor() {
-        return jenismtr;
-    }
-
-    public void setJenisMotor(@Nullable String jenismtr) {
-        this.jenismtr = jenismtr;
-    }
-
     @Nullable
     public int getTotalMotor() {
-        return totalmtr;
+        return totalMotor;
     }
 
-    public void setTotalMotor(@Nullable int totalmtr) {
-        this.totalmtr = totalmtr;
+    public void setTotalMotor(@Nullable int totalMotor) {
+        this.totalMotor = totalMotor;
     }
 
     @Nullable
@@ -275,15 +259,49 @@ public class User implements Serializable {
         this.acceptTOS = acceptTOS;
     }
 
+    @Nullable
+    public String getNamaJalan() {
+        return namaJalan;
+    }
 
+    public void setNamaJalan(@Nullable String namaJalan) {
+        this.namaJalan = namaJalan;
+    }
 
     @Nullable
-    public String getNosim() {
+    public String getKota() {
+        return kota;
+    }
+
+    public void setKota(@Nullable String kota) {
+        this.kota = kota;
+    }
+
+    @Nullable
+    public String getProvinsi() {
+        return provinsi;
+    }
+
+    public void setProvinsi(@Nullable String provinsi) {
+        this.provinsi = provinsi;
+    }
+
+    @Nullable
+    public String getKodepos() {
+        return kodepos;
+    }
+
+    public void setKodepos(@Nullable String kodepos) {
+        this.kodepos = kodepos;
+    }
+
+    @Nullable
+    public String getNomor_sim() {
         return nomor_sim;
     }
 
-    public void setNosim(@Nullable String nosim) {
-        this.nomor_sim = nosim;
+    public void setNomor_sim(@Nullable String nomor_sim) {
+        this.nomor_sim = nomor_sim;
     }
 
     @Override
@@ -300,14 +318,15 @@ public class User implements Serializable {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", fullAddress='" + fullAddress + '\'' +
-                ", platmtr='" + platmtr + '\'' +
-                ", merkmtr='" + merkmtr + '\'' +
-                ", jenismtr='" + jenismtr + '\'' +
-                ", totalmtr=" + totalmtr +
+                ", namaJalan='" + namaJalan + '\'' +
+                ", kota='" + kota + '\'' +
+                ", provinsi='" + provinsi + '\'' +
+                ", kodepos='" + kodepos + '\'' +
+                ", totalMotor=" + totalMotor +
                 ", createdAt=" + createdAt +
                 ", updateAt=" + updateAt +
                 ", acceptTOS=" + acceptTOS +
-                ", nosim='" + nomor_sim + '\'' +
+                ", nomor_sim='" + nomor_sim + '\'' +
                 ", token='" + token + '\'' +
                 '}';
     }

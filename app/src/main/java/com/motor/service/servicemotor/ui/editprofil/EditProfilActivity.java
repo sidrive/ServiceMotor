@@ -1,17 +1,25 @@
 package com.motor.service.servicemotor.ui.editprofil;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -20,13 +28,21 @@ import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.motor.service.servicemotor.MainActivity;
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
@@ -63,6 +79,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -74,12 +91,13 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListen
  */
 
 public class EditProfilActivity extends BaseActivity implements OnDateSetListener,
-        OnDialogUploadOptionClickListener, PermissionCallbacks{
+        OnDialogUploadOptionClickListener, PermissionCallbacks, OnCameraIdleListener, OnMapReadyCallback {
 
     private static final String TAG = "EditProfilActivity";
     public static final int REQUST_CODE_CAMERA = 1002;
     public static final int REQUST_CODE_GALLERY = 1001;
     private static final int RC_CAMERA_PERM = 205;
+    private static final double[] TODO = {0,0};
     public static Uri mCapturedImageURI;
 
     @BindString(R.string.error_field_required)
@@ -113,23 +131,50 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
     @Bind(R.id.input_phone)
     EditText inputPhone;
 
-    @Bind(R.id.input_plat)
-    EditText inputPlatMotor;
+    @Bind(R.id.input_alamat)
+    EditText inputAlamat;
 
-    @Bind(R.id.input_jenis)
-    EditText inputJenisMotor;
+    @Bind(R.id.input_jalan)
+    EditText inputJalan;
 
-    @Bind(R.id.input_merk)
-    EditText inputMerk;
+    @Bind(R.id.input_kota)
+    EditText inputKota;
+
+    @Bind(R.id.input_provinsi)
+    EditText inputProvinsi;
+
+    @Bind(R.id.input_kodepos)
+    EditText inputKodepos;
+
+    @Bind(R.id.input_sim)
+    EditText inputSim;
 
     @Bind(R.id.img_avatar)
     CircleImageView imgAvatar;
+
+    @Bind(R.id.imgMap)
+    ImageView imgMap;
+
+    @Bind(R.id.rel_map)
+    RelativeLayout relMap;
 
     @Inject
     EditProfilPresenter presenter;
 
     @Inject
     User user;
+
+    Calendar cal;
+
+    private GoogleMap mMap;
+
+    private boolean mapMode = false;
+
+    private double latitude = 0;
+    private double longitude = 0;
+    SupportMapFragment mapFragment;
+
+    MenuItem menuDone;
 
     CharSequence[] charGenders;
     private FirebaseAuth mAuth;
@@ -142,7 +187,17 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
 
     boolean register = false;
 
-    private int bankVal = 0;
+    private LocationManager lm;
+    private android.location.Location mlocation;
+
+//    private static final int RC_ALL_PERMISSION= 111;
+//    private static final String[] PERMISION =
+//            {Manifest.permission.ACCESS_FINE_LOCATION,
+//                    Manifest.permission.READ_CONTACTS,
+//                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    Manifest.permission.CAMERA
+//            };
 
     public static void startWithUser(BaseActivity activity, final User user, boolean register) {
         Intent intent = new Intent(activity, EditProfilActivity.class);
@@ -182,6 +237,14 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        cal = Calendar.getInstance();
+
+        getCurrentLocationUser();
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         setTitle("Ubah Data Profil");
 
         charGenders = getResources().getStringArray(R.array.list_gender);
@@ -205,6 +268,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.done, menu);
+        menuDone = menu.findItem(R.id.menu_done);
         return true;
     }
 
@@ -213,7 +277,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-      /*finish();*/
+            /*finish();*/
             MainAct.startWithUser(this, user);
         }
 
@@ -297,17 +361,26 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
         if (user.getGender() != null) {
             initGender(user.getGender());
         }
-    /*if (user.getEmail() != null) {
-      inputEmail.setText(user.getEmail());
-    }*/
+        if (user.getNomor_sim() != null) {
+            inputSim.setText(user.getNomor_sim());
+        }
         if (user.getPhone() != null) {
             inputPhone.setText(user.getPhone());
         }
-        if (user.getMerkMotor() != null) {
-            inputMerk.setText(user.getMerkMotor());
+        if (user.getFullAddress() != null) {
+            inputAlamat.setText(user.getFullAddress());
         }
-        if (user.getJenisMotor() != null) {
-            inputJenisMotor.setText(user.getJenisMotor());
+        if (user.getNamaJalan() != null) {
+            inputJalan.setText(user.getNamaJalan());
+        }
+        if (user.getKota() != null) {
+            inputKota.setText(user.getKota());
+        }
+        if (user.getProvinsi() != null) {
+            inputProvinsi.setText(user.getProvinsi());
+        }
+        if (user.getKodepos() != null) {
+            inputKodepos.setText(user.getKodepos());
         }
         if (user.getPhoto_url() != null) {
             if (!user.getPhoto_url().equals("NOT")) {
@@ -319,9 +392,6 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
             }
         }
 
-       if (user.getPlatMotor() != null) {
-            inputPlatMotor.setText(user.getPlatMotor());
-        }
 
         if (!register) {
             inputBirthDay.setEnabled(false);
@@ -345,7 +415,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
 
     private void initBirthDay(long timemilis) {
         dateBirthDay = timemilis;
-        String date = DateFormater.getDate(dateBirthDay, "dd MMM yyyy");
+        String date = DateFormater.getDate(dateBirthDay, "dd MMMM Y");
         inputBirthDay.setText(date);
     }
 
@@ -370,18 +440,22 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
     // Onclick list -------------//
 
     private void showDialogDatePicker() {
-        Calendar cal = Calendar.getInstance();
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
-                this,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-        );
 
-        dpd.setTitle("Tanggal Lahir");
-        dpd.vibrate(true);
-        dpd.dismissOnPause(false);
-        dpd.show(getFragmentManager(), "Datepickerdialog");
+        new android.app.DatePickerDialog(EditProfilActivity.this, new android.app.DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        myCalendar.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                cal.set(Calendar.YEAR,year);
+
+                String formatTanggal = "dd MMMM Y";
+                SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
+                inputBirthDay.setText(sdf.format(cal.getTime()));
+            }
+        },
+                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void showDialogGender() {
@@ -496,6 +570,12 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
         inputGender.setError(null);
         inputBirthDay.setError(null);
         inputPhone.setError(null);
+        inputAlamat.setError(null);
+        inputJalan.setError(null);
+        inputKota.setError(null);
+        inputProvinsi.setError(null);
+        inputKodepos.setError(null);
+        inputSim.setError(null);
 
         String name = inputName.getText().toString();
         String email = inputEmail.getText().toString();
@@ -506,10 +586,14 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
         if (genderVal == 1) {
             gender = "F";
         }
+
         String phone = inputPhone.getText().toString();
-        String platmotor = inputPlatMotor.getText().toString();
-        String merkmotor = inputMerk.getText().toString();
-        String jenismotor = inputJenisMotor.getText().toString();
+        String alamat = inputAlamat.getText().toString();
+        String jalan = inputJalan.getText().toString();
+        String kota = inputKota.getText().toString();
+        String provinsi = inputProvinsi.getText().toString();
+        String kodepos = inputKodepos.getText().toString();
+        String nosim = inputSim.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -518,25 +602,65 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
             inputName.setError(strErrRequired);
             focusView = inputName;
             cancel = true;
+            showLoading(false);
         }
 
         if (TextUtils.isEmpty(email)) {
             inputEmail.setError(strErrRequired);
             focusView = inputEmail;
             cancel = true;
+            showLoading(false);
         } else {
             if (!isValidEmail(email)) {
                 inputEmail.setError("Email not valid");
                 focusView = inputEmail;
                 cancel = true;
-
+                showLoading(false);
             }
         }
 
-       if (TextUtils.isEmpty(platmotor)) {
-            inputPlatMotor.setError(strErrRequired);
-            focusView = inputPlatMotor;
+        if (TextUtils.isEmpty(inputBirthDay.getText().toString())) {
+            inputBirthDay.setError(strErrRequired);
+            focusView = inputBirthDay;
             cancel = true;
+            showLoading(false);
+        }
+
+        if (TextUtils.isEmpty(alamat)) {
+            inputAlamat.setError(strErrRequired);
+            focusView = inputAlamat;
+            cancel = true;
+            showLoading(false);
+        }
+        if (TextUtils.isEmpty(jalan)) {
+            inputJalan.setError(strErrRequired);
+            focusView = inputJalan;
+            cancel = true;
+            showLoading(false);
+        }
+        if (TextUtils.isEmpty(kota)) {
+            inputKota.setError(strErrRequired);
+            focusView = inputKota;
+            cancel = true;
+            showLoading(false);
+        }
+        if (TextUtils.isEmpty(provinsi)) {
+            inputProvinsi.setError(strErrRequired);
+            focusView = inputProvinsi;
+            cancel = true;
+            showLoading(false);
+        }
+        if (TextUtils.isEmpty(kodepos)) {
+            inputKodepos.setError(strErrRequired);
+            focusView = inputKodepos;
+            cancel = true;
+            showLoading(false);
+        }
+        if (TextUtils.isEmpty(nosim)) {
+            inputSim.setError(strErrRequired);
+            focusView = inputSim;
+            cancel = true;
+            showLoading(false);
         }
 
         if (!TextUtils.isEmpty(phone)) {
@@ -544,6 +668,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
                 inputPhone.setError("Phone number not valid");
                 focusView = inputPhone;
                 cancel = true;
+                showLoading(false);
             }
         }
 
@@ -554,16 +679,26 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
             user.setAcceptTOS(true);
             user.setFull_name(name);
             user.setEmail(email);
-            user.setPlatMotor(platmotor);
+            user.setFullAddress(alamat);
             if (!TextUtils.isEmpty(phone)) {
                 user.setPhone(phone);
             }
-            if (!TextUtils.isEmpty(merkmotor)) {
-                user.setMerkMotor(merkmotor);
+            if (!TextUtils.isEmpty(jalan)) {
+                user.setNamaJalan(jalan);
             }
-            if (!TextUtils.isEmpty(jenismotor)) {
-                user.setJenisMotor(jenismotor);
+            if (!TextUtils.isEmpty(kota)) {
+                user.setKota(kota);
             }
+            if (!TextUtils.isEmpty(provinsi)) {
+                user.setProvinsi(provinsi);
+            }
+            if (!TextUtils.isEmpty(kodepos)) {
+                user.setKodepos(kodepos);
+            }
+            if (!TextUtils.isEmpty(nosim)) {
+                user.setNomor_sim(nosim);
+            }
+
             if (genderVal != 3) {
                 user.setGender(gender);
             }
@@ -577,9 +712,9 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
                 user.setUpdateAt(System.currentTimeMillis());
             }
 
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Date date = new Date();
-            String updateAt = dateFormat.format(date);
+            user.setBirthday(cal.getTimeInMillis());
+            user.setUpdateAt(System.currentTimeMillis());
+
 
             if (imgOriginal != null) {
                 presenter.uploadAvatar(user, imgSmall, imgOriginal);
@@ -618,6 +753,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
                     RC_CAMERA_PERM, perms);
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -661,5 +797,142 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
         }
     }
 
+    private void getCurrentLocationUser() {
+        lm = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (isNetworkEnabled) {
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locationListener);
+                mlocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                Log.e(TAG, "getCurrentLocationUser: "+mlocation );
+            } else if (isGPSEnabled) {
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+                mlocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Log.e(TAG, "getCurrentLocationUser: "+mlocation );
+            }
+        }
+    }
+
+    private android.location.LocationListener locationListener = new android.location.LocationListener() {
+        @Override
+        public void onLocationChanged(android.location.Location location) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mMap = googleMap;
+//        LatLng indonesia = new LatLng(-7.803249, 110.3398253);
+        LatLng indonesia = new LatLng(mlocation.getLatitude(),mlocation.getLongitude());
+        Log.e(TAG, "initMap: "+indonesia );
+        initMap(indonesia);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(indonesia, 16));
+        mMap.setOnCameraIdleListener(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+    }
+
+    public void initMap(LatLng latLng) {
+        latitude = latLng.latitude;
+        longitude = latLng.longitude;
+
+        String url =
+                "http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
+                        + latLng.latitude + "," + latLng.longitude + "+&sensor=false";
+        Log.d("initmap", "url = " + url);
+        Glide.with(this)
+                .load(url)
+                .placeholder(R.color.colorShadow2)
+                .centerCrop()
+                .dontAnimate()
+                .into(imgMap);
+
+    }
+
+    @Override
+    public void onCameraIdle() {
+        LatLng latLng = mMap.getCameraPosition().target;
+    }
+
+    @OnClick(R.id.imgMap)
+    void showMap() {
+        relMap.setVisibility(View.VISIBLE);
+        mapMode = true;
+//        menuDone.setVisible(true);
+    }
+
+    @OnClick(R.id.input_peta)
+    void showPeta(){
+        relMap.setVisibility(View.VISIBLE);
+        mapMode = true;
+        menuDone.setVisible(false);
+    }
+
+    @OnClick(R.id.btnSimpanMap)
+    void hideMap(){
+        relMap.setVisibility(View.GONE);
+        mapMode = false;
+        menuDone.setVisible(true);
+        LatLng latLng = mMap.getCameraPosition().target;
+        Log.e(TAG, "hideMap: "+latLng );
+
+        getAddress(latLng);
+    }
+
+    private void getAddress(LatLng latLng) {
+
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.e(TAG, "getAddress: "+addresses.get(0));
+        String fulladdress = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        String city = addresses.get(0).getSubAdminArea();
+        String state = addresses.get(0).getAdminArea();
+        String country = addresses.get(0).getCountryName();
+        String postalCode = addresses.get(0).getPostalCode();
+        String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+        String [] add = fulladdress.split(",");
+
+        inputJalan.setText(add[0]);
+        inputKota.setText(city);
+        inputProvinsi.setText(state);
+        inputKodepos.setText(postalCode);
+
+        user.setLatitude(latLng.latitude);
+        user.setLongitude(latLng.longitude);
+    }
 
 }

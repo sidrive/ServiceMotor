@@ -1,5 +1,6 @@
 package com.motor.service.servicemotor.ui.main;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -39,12 +40,16 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by ikun on 02/01/18.
  */
 
 public class MainAct extends BaseActivity {
+
+    private static final int RC_LOC_PERM = 1001;
 
     @Bind(R.id.txtnama_user)
     TextView txtnama;
@@ -78,6 +83,8 @@ public class MainAct extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver,
                 new IntentFilter("tokenReceiver"));
         ButterKnife.bind(this);
+
+        locationTask();
 
         String token = FirebaseInstanceId.getInstance().getToken();
         presenter.updateFCMToken(user.getUid(),token);
@@ -236,5 +243,18 @@ public class MainAct extends BaseActivity {
                 })
                 .setIcon(icon)
                 .show();
+    }
+
+    @AfterPermissionGranted(RC_LOC_PERM)
+    public void locationTask() {
+        String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            // Have permission, do the thing!
+//            onLaunchCamera();
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(this, getString(R.string.ijin_lokasi),
+                    RC_LOC_PERM, perms);
+        }
     }
 }
