@@ -239,7 +239,7 @@
                 <com.motor.service.servicemotor.utils.TypefacedTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tentukan lokasi belajar yang anda inginkan"
+                    android:text="Lokasi Rumah Anda berdasarkan Peta"
                     app:typeface="Roboto-Light.ttf" />
 
                 <ImageView

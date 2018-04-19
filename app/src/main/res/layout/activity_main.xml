@@ -54,7 +54,10 @@
                     android:layout_gravity="center|left"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:src="@color/colorSoft" />
+                    android:src="@color/colorSoft"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorGold"
+                    app:civ_border_overlay="true"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,32 +104,38 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="bottom"
         android:gravity="bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorGray">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="5dp">
+
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="100dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Input"
-                android:visibility="visible" />
+                android:text="Input Motor"
+                android:drawableEnd="@mipmap/ic_launcher_motorbike"
+                android:background="@drawable/bg_radius_white_selector"/>
 
             <Button
                 android:id="@+id/button3"
-                android:layout_width="100dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Profil"
-                android:visibility="visible" />
+                android:text="Profile"
+                android:drawableEnd="@mipmap/ic_rider_profile"
+                android:background="@drawable/bg_radius_white_selector"/>
         </LinearLayout>
 
     </LinearLayout>

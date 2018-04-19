@@ -3,8 +3,8 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.0'
     defaultConfig {
         applicationId "com.motor.service.servicemotor"
         minSdkVersion 21
@@ -21,13 +21,12 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-
     // Firebase dependencies
     compile rootProject.ext.fbcore
     compile rootProject.ext.fbauth
@@ -37,7 +36,6 @@ dependencies {
     compile rootProject.ext.fbcrash
     compile rootProject.ext.fbconfig
     compile rootProject.ext.fbinvites
-
     // gms dependencies
     compile rootProject.ext.gcore
     compile rootProject.ext.gplus
@@ -46,11 +44,8 @@ dependencies {
     compile rootProject.ext.glocation
     compile rootProject.ext.gmap
     compile rootProject.ext.gmapUtil
-
     apt rootProject.ext.daggerCompiler
-
-
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:25.4.0'
     compile 'com.android.support:support-annotations:25.4.0'
@@ -79,7 +74,6 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.github.stfalcon:frescoimageviewer:0.5.0'
     compile 'com.facebook.fresco:fresco:1.8.1'
-
 }
 
 
