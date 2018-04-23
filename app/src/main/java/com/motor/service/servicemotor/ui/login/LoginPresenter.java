@@ -103,7 +103,7 @@ public class LoginPresenter implements BasePresenter {
                             Log.e("getAuthWithGoogle", "LoginPresenter" + task.getResult().getUser().getProviderData().toString());
                             processLogin(task.getResult().getUser(), task.getResult().getUser().getProviderData().get(1));
                         } else {
-//                            activity.showLoading(false);
+                            activity.showLoading(false);
                             activity.showLoginFail("Gagal Masuk");
                         }
                     }).addOnFailureListener(e -> {activity.showLoginFail(e.getMessage());});

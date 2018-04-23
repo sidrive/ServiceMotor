@@ -8,6 +8,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.FirebaseApp;
 import com.motor.service.servicemotor.base.config.DefaultConfig;
 import com.motor.service.servicemotor.data.editMotor.EditMotorComponent;
@@ -27,6 +28,7 @@ import com.motor.service.servicemotor.data.remote.user.UserModule;
 import com.motor.service.servicemotor.ui.editmotor.EditMotorActivity;
 import com.motor.service.servicemotor.ui.inputMotor.InputMotorActivity;
 import com.motor.service.servicemotor.ui.main.MainAct;
+import io.fabric.sdk.android.Fabric;
 
 public class BaseApplication extends MultiDexApplication {
     private AppComponent appComponent;
@@ -59,6 +61,7 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         initAppComponent();
     }
 

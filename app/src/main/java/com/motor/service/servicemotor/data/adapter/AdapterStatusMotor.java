@@ -66,7 +66,17 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         Motor motor = getItem(position);
         Log.e(TAG, "onBindViewHolder: "+motor);
 
-        String tglService = DateFormater.getDate(motor.getTgl_service(),"d MMMM Y");
+        Long tglserv;
+
+
+        if(motor.getTgl_service() == null){
+            tglserv = System.currentTimeMillis();
+        }
+        else {
+            tglserv = motor.getTgl_service();
+        }
+
+        String tglService = DateFormater.getDate(tglserv,"d MMMM y");
 
         holder.txtplat.setText(motor.getSeri()+" "+motor.getPlat());
         holder.txtmerk.setText(motor.getMerk());

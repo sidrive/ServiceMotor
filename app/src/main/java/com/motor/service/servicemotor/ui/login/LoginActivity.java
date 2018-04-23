@@ -1,5 +1,6 @@
 package com.motor.service.servicemotor.ui.login;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.base.BaseActivity;
 import com.motor.service.servicemotor.base.BaseApplication;
 import com.motor.service.servicemotor.data.remote.model.User;
+import com.motor.service.servicemotor.ui.editprofil.EditProfilActivity;
 import com.motor.service.servicemotor.ui.main.MainAct;
 
 import javax.inject.Inject;
@@ -25,10 +27,13 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class LoginActivity extends BaseActivity {
 
     public static final int REQUEST_SIGN_GOOGLE = 9001;
+    private static final int RC_LOC_PERM = 1001;
 
     @Nullable
     @Bind(R.id.view_progress)
@@ -46,6 +51,8 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
         ButterKnife.bind(this);
+
+        locationTask();
 
     }
 
@@ -84,8 +91,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void showRegisterUser(User user){
-        MainAct.startWithUser(this, user);
-        /*EditProfileActivity.startWithUser(this, user, true);*/
+//        MainAct.startWithUser(this, user);
+        EditProfilActivity.startWithUser(this, user, true);
         Toast.makeText(this, "Berhasil Masuk", Toast.LENGTH_LONG).show();
         finish();
     }
@@ -110,7 +117,7 @@ public class LoginActivity extends BaseActivity {
             if(requestCode == REQUEST_SIGN_GOOGLE) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 //presenter.cekEmail(result);
-//                showLoading(true);
+                showLoading(true);
                 presenter.getAuthWithGoogle(result);
             }
             // facebook
@@ -121,5 +128,18 @@ public class LoginActivity extends BaseActivity {
             presenter.revoke();
         }
 
+    }
+
+    @AfterPermissionGranted(RC_LOC_PERM)
+    public void locationTask() {
+        String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            // Have permission, do the thing!
+//            onLaunchCamera();
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(this, getString(R.string.ijin_lokasi),
+                    RC_LOC_PERM, perms);
+        }
     }
 }

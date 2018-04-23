@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -449,7 +450,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 cal.set(Calendar.YEAR,year);
 
-                String formatTanggal = "dd MMMM Y";
+                String formatTanggal = "dd MMMM yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
                 inputBirthDay.setText(sdf.format(cal.getTime()));
             }

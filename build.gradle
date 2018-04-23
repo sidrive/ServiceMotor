@@ -27,6 +27,10 @@ allprojects {
 
             url "https://maven.google.com"
         }
+        maven {
+
+            url 'https://maven.fabric.io/public'
+        }
         jcenter()
     }
 }

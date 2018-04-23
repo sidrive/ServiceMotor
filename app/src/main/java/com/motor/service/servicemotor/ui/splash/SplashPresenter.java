@@ -73,7 +73,7 @@ public class SplashPresenter implements BasePresenter {
                                     if (remoteUser.getPhone() != null) user.setPhone(remoteUser.getPhone());
                                 }
 
-                                Toast.makeText(activity, "Berhasillll", Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity, "Berhasil Masuk", Toast.LENGTH_LONG).show();
                                 activity.showRegisterActivity(user);
                             } else {
                             /*if (remoteUser.isVerified() == true) {*/ activity.showMainActivity(remoteUser);
