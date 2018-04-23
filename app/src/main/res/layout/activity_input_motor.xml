@@ -375,5 +375,6 @@
         <include layout="@layout/conten_detail_motor"            />
     </LinearLayout>
 
+    <include layout="@layout/view_progress"/>
 
 </android.support.design.widget.CoordinatorLayout>

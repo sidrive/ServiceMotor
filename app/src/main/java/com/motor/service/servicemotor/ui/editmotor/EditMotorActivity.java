@@ -101,6 +101,9 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
     @Bind(R.id.txt_kmratakerja)
     EditText kmratakerja;
 
+    @Bind(R.id.viewPrrogress)
+    LinearLayout viewProgress;
+
     @Inject
     EditMotorPresenter presenter;
 
@@ -332,10 +335,16 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
             Toast.makeText(this, "Data Tersimpan", Toast.LENGTH_SHORT).show();
             BaseApplication.get(this).createMotorComponent(motor);
             finish();
+            showLoading(false);
 
     }
 
     public void showLoading(boolean show) {
+        if (show) {
+            viewProgress.setVisibility(View.VISIBLE);
+        } else {
+            viewProgress.setVisibility(View.GONE);
+        }
 
     }
 
@@ -399,6 +408,8 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
         } else {
             presenter.updateMotor(motor);
         }
+
+        showLoading(true);
 
     }
 
