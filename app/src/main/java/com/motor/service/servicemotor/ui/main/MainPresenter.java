@@ -69,6 +69,30 @@ public class MainPresenter implements BasePresenter {
         });
     }
 
+    public void getUser(User user){
+        userService.getUser(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<User> listUser = new ArrayList<User>();
+//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+//                    User user = postSnapshot.getValue(User.class);
+                    User user = dataSnapshot.getValue(User.class);
+                    Log.e("MainPresenter", "onDataChange: " + user);
+                    listUser.add(user);
+//                    Log.e("MainPresenter", "onDataChange: " + listMotor);
+//                }
+
+                activity.initListUser(listUser);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void updateMotor(Motor motor){
         categoryService.saveMotor(motor).addOnCompleteListener(task -> activity.succesSaveMotor()).addOnFailureListener(e -> {
             activity.showLoading(false);

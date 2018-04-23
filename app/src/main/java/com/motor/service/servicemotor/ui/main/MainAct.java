@@ -94,7 +94,7 @@ public class MainAct extends BaseActivity {
         initProfilePhoto();
         initRecycleView();
         initMotor();
-        initDataProfile();
+        initUser();
         initPager();
     }
     @Override
@@ -151,17 +151,18 @@ public class MainAct extends BaseActivity {
 
 
     private void initRecycleView() {
-        lsmotor.setHasFixedSize(true);
-        lsmotor.addItemDecoration(
-                new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-        lsmotor.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        lsmotor.setNestedScrollingEnabled(false);
 
         lsprofile.setHasFixedSize(true);
         lsprofile.addItemDecoration(
                 new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
         lsprofile.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         lsprofile.setNestedScrollingEnabled(false);
+
+        lsmotor.setHasFixedSize(true);
+        lsmotor.addItemDecoration(
+                new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+        lsmotor.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        lsmotor.setNestedScrollingEnabled(false);
     }
 
     public void initMotor(){
@@ -174,13 +175,17 @@ public class MainAct extends BaseActivity {
         lsmotor.setAdapter(adapterStatusMotor);
     }
 
-    public void initDataProfile(){
-        List<User> listUser = new ArrayList<User>();
-        listUser.add(user);
+    public void initUser(){
+        presenter.getUser(user);
+    }
+
+    public void initListUser(List<User> listUser){
         adapterProfileUser = new AdapterProfileUser((ArrayList<User>) listUser,this, this);
 //        adapterStatusMotor.UpdateMotor(listMotor);
         lsprofile.setAdapter(adapterProfileUser);
     }
+
+
 
     public void initProfilePhoto(){
         if (user.getPhoto_url() != null) {

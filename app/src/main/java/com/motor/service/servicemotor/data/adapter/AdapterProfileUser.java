@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView.Adapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,7 +63,7 @@ public class AdapterProfileUser extends Adapter<AdapterProfileUser.ViewHolder> {
         return mitem.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
         @Bind(R.id.txtphone)
         TextView txtphone;

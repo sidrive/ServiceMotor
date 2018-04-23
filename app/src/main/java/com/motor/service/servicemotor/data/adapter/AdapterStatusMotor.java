@@ -205,6 +205,6 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
 
     public void UpdateMotor(List<Motor> listarray) {
         mitem = listarray;
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
     }
 }
