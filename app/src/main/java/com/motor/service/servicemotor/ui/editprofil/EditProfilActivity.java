@@ -42,6 +42,7 @@ import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.motor.service.servicemotor.R;
@@ -843,6 +844,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+
 //        LatLng indonesia = new LatLng(-7.803249, 110.3398253);
         LatLng indonesia = new LatLng(mlocation.getLatitude(),mlocation.getLongitude());
         Log.e(TAG, "initMap: "+indonesia );
@@ -856,15 +858,28 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
             return;
         }
         mMap.setMyLocationEnabled(true);
+
+        mMap.addMarker(new MarkerOptions()
+                .position(mMap.getCameraPosition().target)
+                .title("Marker"));
     }
 
     public void initMap(LatLng latLng) {
-        latitude = latLng.latitude;
-        longitude = latLng.longitude;
+
+        if(user.getLatitude() != 0.0 && user.getLongitude() != 0.0){
+            latitude = user.getLatitude();
+            longitude = user.getLongitude();
+        }else {
+
+            latitude = latLng.latitude;
+            longitude = latLng.longitude;
+        }
+
+        Log.e(TAG, "initMap: "+user.getLongitude());
 
         String url =
-                "http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
-                        + latLng.latitude + "," + latLng.longitude + "+&sensor=false";
+                "http://maps.googleapis.com/maps/api/staticmap?zoom=17&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
+                        + latitude + "," + longitude + "+&sensor=false";
         Log.d("initmap", "url = " + url);
         Glide.with(this)
                 .load(url)

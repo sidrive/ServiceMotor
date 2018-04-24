@@ -2,7 +2,8 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_blackwhite">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,23 +25,31 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:id="@+id/img_avatar"
-                    android:src="@color/colorSoft" />
+                    android:src="@color/colorSoft"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorGold"
+                    app:civ_border_overlay="true"/>
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
-                    android:textColor="@color/colorPrimary"
                     android:id="@+id/btn_upload_avatar"
-                    android:text="Ganti profil foto "/>
+                    android:text="Ganti profil foto "
+                    android:textColor="@color/colorWhite"
+                    android:shadowColor="@color/colorDark"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="5"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/activity_vertical_margin">
+                android:padding="@dimen/activity_vertical_margin"
+                android:background="@drawable/bg_transparant_white">
 
                 <com.motor.service.servicemotor.utils.TypefacedTextView
                     android:layout_width="match_parent"
@@ -240,14 +249,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lokasi Rumah Anda berdasarkan Peta"
-                    app:typeface="Roboto-Light.ttf" />
+                    app:typeface="Roboto-Light.ttf"
+                    android:textColor="@color/colorWhite"/>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:scaleType="centerCrop"
                     android:src="@color/colorShadowWhite"
-                    android:id="@+id/imgMap"/>
+                    android:id="@+id/imgMap"
+                    android:layout_marginBottom="5dp"/>
 
 
 
@@ -275,7 +286,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".base.ui.add_location.AddLocationActivity" />
+            tools:context=".base.ui.add_location.AddLocationActivity"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -289,10 +300,10 @@
             android:id="@+id/btnSimpanMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="14dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="18dp"
             android:text="Simpan Lokasi" />
 
 

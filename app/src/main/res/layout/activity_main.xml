@@ -9,7 +9,8 @@
     android:minHeight="10dp"
     android:minWidth="10dp"
     tools:context="com.motor.service.servicemotor.MainActivity"
-    tools:layout_editor_absoluteY="25dp">
+    tools:layout_editor_absoluteY="25dp"
+    android:background="@drawable/gradient_blackwhite">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +20,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffff"
             android:orientation="vertical">
 
             <LinearLayout
@@ -34,6 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
+                    android:textColor="@color/mdtp_white"
                     android:gravity="center"
                     android:text="TextView"
                     android:textSize="9pt"
@@ -57,7 +58,11 @@
                     android:src="@color/colorSoft"
                     app:civ_border_width="2dp"
                     app:civ_border_color="@color/colorGold"
-                    app:civ_border_overlay="true"/>
+                    app:civ_border_overlay="true"
+                    android:shadowColor="@color/colorDark"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="5"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -91,7 +96,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/bg_shadow"
-            android:layout_marginBottom="45dp">
+            android:layout_marginBottom="65dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/listmotor"
@@ -107,13 +112,11 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom"
         android:gravity="bottom"
-        android:orientation="vertical"
-        android:background="@color/colorGray">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_marginHorizontal="5dp"
             android:layout_marginTop="5dp">
@@ -124,6 +127,7 @@
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginRight="5dp"
                 android:text="Input Motor"
                 android:drawableEnd="@mipmap/ic_launcher_motorbike"
                 android:background="@drawable/bg_radius_white_selector"/>

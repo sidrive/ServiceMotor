@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_blackwhite">
 
 
     <LinearLayout
@@ -15,8 +16,8 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:src="@mipmap/ic_launcher_motorbike"
             android:layout_gravity="center"/>
 
@@ -25,7 +26,12 @@
             android:layout_height="wrap_content"
             android:text="Lupa Service Motor, Lupa Bayar Tagihan atau \n Lupa Bayar Pajak Motor? \n Kini bukan alasan lagi!!"
             android:textStyle="italic"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:shadowColor="@color/colorGold"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="50"/>
 
         <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/spin_kit"
@@ -33,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            app:SpinKit_Color="@color/colorAccent"
+            app:SpinKit_Color="@color/colorYellow"
             android:layout_marginTop="20dp"/>
 
     </LinearLayout>
