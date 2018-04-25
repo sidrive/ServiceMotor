@@ -27,13 +27,13 @@ android {
         }
     }
     compileSdkVersion 26
-    buildToolsVersion '26.0.0'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.motor.service.servicemotor"
-        minSdkVersion 21
-        targetSdkVersion 25
+        minSdkVersion 19
+        targetSdkVersion 2
         multiDexEnabled true
-        versionName "0.1"
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
