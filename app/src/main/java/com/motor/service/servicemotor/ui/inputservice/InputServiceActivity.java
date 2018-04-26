@@ -262,7 +262,7 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
                         myCalender.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         myCalender.set(Calendar.YEAR,year);
 
-                        String formatTanggal = "dd MMMM Y";
+                        String formatTanggal = "dd MMMM y";
                         SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
                         btnTglService.setText(sdf.format(myCalender.getTime()));
                     }

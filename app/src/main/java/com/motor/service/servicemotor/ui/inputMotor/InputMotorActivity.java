@@ -174,25 +174,7 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
         ButterKnife.bind(this);
 
         myCalendar = Calendar.getInstance();
-        btnpajak.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(InputMotorActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.MONTH, month);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                        String formatTanggal = "dd MMMM";
-                        SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
-                        btnpajak.setText(sdf.format(myCalendar.getTime()));
-                    }
-                },
-                        myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
 
         initInputService();
     }
@@ -392,6 +374,34 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
         validate();
     }
 
+    @OnClick(R.id.btn_pajak)
+    void initTahunpajak(){
+        showDialogDate();
+    }
+
+    private void showDialogDate() {
+        btnpajak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(InputMotorActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                        myCalendar.set(Calendar.MONTH, month);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        myCalendar.set(Calendar.YEAR,year);
+
+                        String formatTanggal = "dd MMMM y";
+                        SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
+                        btnpajak.setText(sdf.format(myCalendar.getTime()));
+                    }
+                },
+                        myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
 
     public void validate(){
         txtmerk.setError(null);
@@ -530,7 +540,6 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
         d.setTitle("Pilih Tahun Pembuatan Motor Sesuai BPKB");
         d.setView(dialogView);
         final NumberPicker numberPicker = (NumberPicker) dialogView.findViewById(R.id.dialog_number_picker);
-        myCalendar = Calendar.getInstance();
         int yearNow = myCalendar.get(Calendar.YEAR);
         Log.e("InputMotorActivity", "showYear: " + myCalendar.get(Calendar.YEAR));
         numberPicker.setMaxValue(yearNow);
