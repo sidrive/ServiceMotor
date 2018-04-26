@@ -60,12 +60,12 @@ public class Motor {
     private String no_rangka;
 
     @NonNull
-    private String tahun_pajak;
+    private Long tahun_pajak;
 
     public Motor(){}
 
 
-    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String jenis_service, @NonNull String ket_service, @NonNull int km_NextService, @NonNull int km_now, @NonNull int km_ratarata, @NonNull Boolean motor_utama, @NonNull String photo_url, @NonNull Long tgl_nextService, @NonNull Long tgl_service, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull String tahun_pajak) {
+    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String jenis_service, @NonNull String ket_service, @NonNull int km_NextService, @NonNull int km_now, @NonNull int km_ratarata, @NonNull Boolean motor_utama, @NonNull String photo_url, @NonNull Long tgl_nextService, @NonNull Long tgl_service, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull Long tahun_pajak) {
         this.idmotor = idmotor;
         this.userid = userid;
         this.jenis_service = jenis_service;
@@ -159,11 +159,11 @@ public class Motor {
     }
 
     @NonNull
-    public String getTahun_pajak() {
+    public Long getTahun_pajak() {
         return tahun_pajak;
     }
 
-    public void setTahun_pajak(@NonNull String tahun_pajak) {
+    public void setTahun_pajak(@NonNull Long tahun_pajak) {
         this.tahun_pajak = tahun_pajak;
     }
 

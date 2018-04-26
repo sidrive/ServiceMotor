@@ -29,6 +29,7 @@ import com.motor.service.servicemotor.ui.historyservice.HistoryServiceActivity;
 import com.motor.service.servicemotor.ui.dialog.DialogUploadOption;
 import com.motor.service.servicemotor.ui.dialog.DialogUploadOption.OnDialogUploadOptionClickListener;
 import com.motor.service.servicemotor.ui.inputservice.InputServiceActivity;
+import com.motor.service.servicemotor.utils.DateFormater;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -176,7 +177,8 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
             txtPlat.setText(motor.getPlat().toString());
         }
         if(motor.getTahun_pajak() != null){
-            btnPajak.setText(motor.getTahun_pajak().toString());
+            String tglPajak = DateFormater.getDate(motor.getTahun_pajak(),"d MMMM");
+            btnPajak.setText(tglPajak);
         }
         if(motor.getTahun_buat() != null){
             btnTahunmtr.setText(motor.getTahun_buat().toString());

@@ -77,10 +77,11 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         }
 
         String tglService = DateFormater.getDate(tglserv,"d MMMM y");
+        String tglPajak = DateFormater.getDate(motor.getTahun_pajak(),"d MMMM");
 
         holder.txtplat.setText(motor.getSeri()+" "+motor.getPlat());
         holder.txtmerk.setText(motor.getMerk());
-        holder.txtTglPajak.setText(motor.getTahun_pajak());
+        holder.txtTglPajak.setText(tglPajak);
         holder.txtServiceAkhir.setText(tglService);
 
 

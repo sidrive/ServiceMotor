@@ -31,7 +31,7 @@ android {
     defaultConfig {
         applicationId "com.motor.service.servicemotor"
         minSdkVersion 19
-        targetSdkVersion 2
+        targetSdkVersion 23
         multiDexEnabled true
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

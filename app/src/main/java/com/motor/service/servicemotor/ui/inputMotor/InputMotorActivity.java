@@ -465,7 +465,8 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
             motor.setPlat(String.valueOf(txtplat.getText()).toUpperCase());
             motor.setTahun_buat(String.valueOf(btnthnmtr.getText()));
             motor.setNo_rangka(String.valueOf(norangka.getText()));
-            motor.setTahun_pajak(String.valueOf(btnpajak.getText()));
+//            motor.setTahun_pajak(String.valueOf(btnpajak.getText()));
+            motor.setTahun_pajak(myCalendar.getTimeInMillis());
             motor.setKm_now(Integer.valueOf(txtKmNow.getText().toString()));
             if(chYes.isChecked()){
                 if(TextUtils.isEmpty(kmratakerja.getText().toString())){
