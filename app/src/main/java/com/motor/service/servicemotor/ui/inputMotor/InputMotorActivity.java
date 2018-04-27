@@ -376,10 +376,6 @@ public class InputMotorActivity extends BaseActivity implements DialogUploadOpti
 
     @OnClick(R.id.btn_pajak)
     void initTahunpajak(){
-        showDialogDate();
-    }
-
-    private void showDialogDate() {
         btnpajak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,6 +2,7 @@ package com.motor.service.servicemotor.ui.editmotor;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +39,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -78,6 +82,9 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
     @Bind(R.id.txt_norangka)
     EditText txtNorangka;
 
+    @Bind(R.id.txt_kmNow)
+    EditText txtKmnow;
+
     @Bind(R.id.imageView2)
     ImageView imgAvatar;
 
@@ -114,6 +121,8 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
     byte[] imgSmall;
     Uri imgOriginal;
 
+    Calendar myCalendar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +131,8 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
         ButterKnife.bind(this);
 
         initMotor();
+
+        myCalendar = Calendar.getInstance();
 
     }
 
@@ -185,6 +196,9 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
         }
         if(motor.getNo_rangka() != null){
             txtNorangka.setText(motor.getNo_rangka().toString());
+        }
+        if(String.valueOf(motor.getKm_now()) != null){
+            txtKmnow.setText(String.valueOf(motor.getKm_now()));
         }
         if(motor.getPhoto_url() != null){
             if (!motor.getPhoto_url().equals("NOT")) {
@@ -267,6 +281,30 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
     @OnClick(R.id.btn_simpan)
     void simpanMotor(){
         validate();
+    }
+
+    @OnClick(R.id.btn_pajak)
+    void showDatePajak(){
+        btnPajak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(EditMotorActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                        myCalendar.set(Calendar.MONTH, month);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        myCalendar.set(Calendar.YEAR,year);
+
+                        String formatTanggal = "dd MMMM";
+                        SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
+                        btnPajak.setText(sdf.format(myCalendar.getTime()));
+                    }
+                },
+                        myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
     }
 
     @Override
@@ -404,6 +442,11 @@ public class EditMotorActivity extends BaseActivity implements OnDialogUploadOpt
     }
 
     public void validate(){
+        String tglPajak = DateFormater.getDate(motor.getTahun_pajak(),"d MMMM");
+        if(btnPajak.getText().toString() != tglPajak ){
+            myCalendar.add(Calendar.YEAR,1);
+            motor.setTahun_pajak(myCalendar.getTimeInMillis());
+        }
 
         if (imgOriginal != null) {
             presenter.uploadAvatar(motor, imgSmall, imgOriginal);
