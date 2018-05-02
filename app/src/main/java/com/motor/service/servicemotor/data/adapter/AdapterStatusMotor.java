@@ -1,6 +1,7 @@
 package com.motor.service.servicemotor.data.adapter;
 
 import android.animation.ValueAnimator;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,11 +30,14 @@ import com.motor.service.servicemotor.ui.main.MainAct;
 import com.motor.service.servicemotor.utils.DateFormater;
 import com.motor.service.servicemotor.utils.ProgressBarAnimation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.facebook.GraphRequest.TAG;
 
@@ -79,10 +84,14 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         String tglService = DateFormater.getDate(tglserv,"d MMMM y");
         String tglPajak = DateFormater.getDate(motor.getTahun_pajak(),"d MMMM");
 
+        Long sisaPajak = motor.getTahun_pajak() - System.currentTimeMillis();
+        int diff = (int) Math.floor(sisaPajak/1000/60/60/24);
+
         holder.txtplat.setText(motor.getSeri()+" "+motor.getPlat());
         holder.txtmerk.setText(motor.getMerk());
         holder.txtTglPajak.setText(tglPajak);
         holder.txtServiceAkhir.setText(tglService);
+        holder.txtSisaPajak.setText(String.valueOf(diff)+" hari sebelum jatuh tempo bayar pajak");
 
 
         float from = motor.getKm_NextService()-motor.getKm_now();
@@ -145,6 +154,72 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
             }
         });
 
+        holder.btnBayarPajak.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get prompts.xml view
+                LayoutInflater li = LayoutInflater.from(mcontext);
+                View promptsView = li.inflate(R.layout.bayarpajak, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        mcontext);
+
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                final Button btnTglPajak = (Button) promptsView.findViewById(R.id.btn_pajak);
+
+                Calendar myCalendar;
+                myCalendar = Calendar.getInstance();
+
+                btnTglPajak.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new DatePickerDialog(mcontext, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                                myCalendar.set(Calendar.MONTH, month);
+                                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                myCalendar.set(Calendar.YEAR,year);
+
+                                String formatTanggal = "dd MMMM y";
+                                SimpleDateFormat sdf = new SimpleDateFormat(formatTanggal);
+                                btnTglPajak.setText(sdf.format(myCalendar.getTime()));
+                            }
+                        },
+                                myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                    }
+                });
+
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Update",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+
+                                        myCalendar.add(Calendar.YEAR,1);
+                                        motor.setTahun_pajak(myCalendar.getTimeInMillis());
+
+                                        activity.updateKM(motor);
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
+        });
+
 
     }
 
@@ -166,6 +241,9 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         @Bind(R.id.txtTglPajak)
         TextView txtTglPajak;
 
+        @Bind(R.id.txtSisaPajak)
+        TextView txtSisaPajak;
+
         @Bind(R.id.txtserviceakhir)
         TextView txtServiceAkhir;
 
@@ -175,7 +253,8 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         @Bind(R.id.progresKilometer)
         ProgressBar progresKilometer;
 
-
+        @Bind(R.id.btnBayarPajak)
+        Button btnBayarPajak;
 
         @Bind(R.id.btnUpdateKm)
         Button btnUpdateKm;
