@@ -223,8 +223,6 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
 
     }
 
-
-
     @Override
     public int getItemCount() {
         return mitem.size();
