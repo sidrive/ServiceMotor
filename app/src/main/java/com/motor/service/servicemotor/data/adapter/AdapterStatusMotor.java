@@ -15,14 +15,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.motor.service.servicemotor.R;
 import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.ui.editmotor.EditMotorActivity;
@@ -221,6 +228,9 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         });
 
 
+        textAnim(holder);
+        initPhotoMotor(holder,motor);
+
     }
 
     @Override
@@ -257,6 +267,9 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
         @Bind(R.id.btnUpdateKm)
         Button btnUpdateKm;
 
+        @Bind(R.id.ivImgmotor)
+        ImageView imageView;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -284,5 +297,45 @@ public class AdapterStatusMotor extends Adapter<AdapterStatusMotor.ViewHolder> {
     public void UpdateMotor(List<Motor> listarray) {
         mitem = listarray;
 //        notifyDataSetChanged();
+    }
+
+    public void textAnim(ViewHolder holder){
+        Animation mAnimation = new TranslateAnimation(1000.0f, -750.0f,
+                0.0f, 0.0f);
+        mAnimation.setDuration(13000);
+        mAnimation.setRepeatMode(Animation.RESTART);
+        mAnimation.setRepeatCount(Animation.INFINITE);
+
+        holder.txtSisaPajak.setAnimation(mAnimation);
+    }
+
+    public void initPhotoMotor(ViewHolder holder, Motor motor){
+        if (motor.getPhoto_url() != null) {
+            if (!motor.getPhoto_url().equalsIgnoreCase("NOT")){
+                Glide.with(mcontext)
+                        .load(motor.getPhoto_url()).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        Log.e("IMAGE_EXCEPTION", "Exception " + e.toString());
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        Log.d("smtime img's not loaded",  "n dis tex's not di");
+                        return false;
+                    }
+                });
+                        /*.placeholder(R.color.colorSoft)
+                        .dontAnimate()
+                        .into(imgAvatar);*/
+
+                Glide.with(mcontext)
+                        .load(motor.getPhoto_url())
+                        .placeholder(R.color.colorSoft)
+                        .dontAnimate()
+                        .into(holder.imageView);
+            }
+        }
     }
 }

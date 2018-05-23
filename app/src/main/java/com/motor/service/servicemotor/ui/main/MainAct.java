@@ -7,7 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.midi.MidiOutputPort;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
@@ -32,6 +35,8 @@ import com.motor.service.servicemotor.data.remote.model.User;
 import com.motor.service.servicemotor.ui.editprofil.EditProfilActivity;
 import com.motor.service.servicemotor.ui.inputMotor.InputMotorActivity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +101,8 @@ public class MainAct extends BaseActivity {
         initMotor();
         initUser();
         initPager();
+        checkCon(true);
+//        checkStat();
     }
     @Override
     protected void setupActivityComponent() {
@@ -261,5 +268,33 @@ public class MainAct extends BaseActivity {
             EasyPermissions.requestPermissions(this, getString(R.string.ijin_lokasi),
                     RC_LOC_PERM, perms);
         }
+    }
+
+    public void checkCon(boolean enabled){
+
+
+        try {
+            final ConnectivityManager conman = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+            final Class<?> conmanClass = Class.forName(conman.getClass().getName());
+            final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
+            iConnectivityManagerField.setAccessible(true);
+            final Object iConnectivityManager = iConnectivityManagerField.get(conman);
+            final Class<?> iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+            final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+            setMobileDataEnabledMethod.setAccessible(true);
+            setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        checkStat();
+    }
+
+    public void checkStat(){
+        ConnectivityManager connect = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        Log.e("cyes", "checkCon: "+connect.getNetworkInfo(0).getState() );
+
     }
 }

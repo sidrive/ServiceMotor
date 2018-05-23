@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="10dp"
         android:background="@drawable/bg_view_mtr">
 
         <LinearLayout
@@ -27,56 +26,121 @@
                 android:layout_marginBottom="5dp"
                 android:text="Honda 800 AB123CD"
                 android:textStyle="bold"
-                android:textSize="8pt"/>
+                android:textSize="9pt"
+                android:textColor="@color/colorRed"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView7"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="Merk Motor " />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtMerk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Honda"
-                android:textAlignment="textEnd"/>
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="italic"
+                        android:text="Merk Motor :" />
+
+                    <TextView
+                        android:id="@+id/txtMerk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Honda"
+                        android:textStyle="bold"
+                        android:textSize="8pt"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Service Terakhir :"
+                        android:textStyle="italic"/>
+
+                    <TextView
+                        android:id="@+id/txtserviceakhir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="01-01-2018"
+                        android:textStyle="bold"
+                        android:textSize="8pt"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="italic"
+                        android:text="Tgl Pajak :" />
+
+                    <TextView
+                        android:id="@+id/txtTglPajak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="01-01-2018"
+                        android:textStyle="bold"
+                        android:textSize="8pt"/>
+                </LinearLayout>
 
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp">
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tgl Pajak" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtTglPajak"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="0000 km"
-                android:textAlignment="textEnd"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_logo_honda"
+                    android:layout_gravity="center"
+                    android:id="@+id/ivImgmotor"
+                    />
+            </LinearLayout>
+
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -93,34 +157,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="0000 km"
-                android:textAlignment="textEnd"/>
+                android:textStyle="bold|italic"
+                android:textColor="@color/wallet_holo_blue_light"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Service Terakhir" />
-
-            <TextView
-                android:id="@+id/txtserviceakhir"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="01-01-2018"
-                android:textAlignment="textEnd"/>
 
 
-        </LinearLayout>
 
 
         <RelativeLayout
