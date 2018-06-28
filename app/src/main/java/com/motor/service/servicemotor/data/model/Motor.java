@@ -2,11 +2,13 @@ package com.motor.service.servicemotor.data.model;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
+
 /**
  * Created by ikun on 17/01/18.
  */
 
-public class Motor {
+public class Motor implements Serializable {
 
     @NonNull
     private String idmotor;

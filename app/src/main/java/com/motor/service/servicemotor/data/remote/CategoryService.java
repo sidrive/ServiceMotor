@@ -3,6 +3,7 @@ package com.motor.service.servicemotor.data.remote;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.motor.service.servicemotor.data.model.Motor;
 import com.motor.service.servicemotor.data.model.Service;
 
@@ -26,6 +27,18 @@ public class CategoryService {
 
     public DatabaseReference getSeri(String id){
         return databaseRef.child("seri").child(id);
+    }
+
+    public Query getServicePaket(String id){
+        return databaseRef.child("service").child(id).orderByChild("jenisService").equalTo("Service & Ganti Oli");
+    }
+
+    public Query getGantiOli(String id){
+        return databaseRef.child("service").child(id).orderByChild("jenisService").equalTo("Ganti Oli");
+    }
+
+    public Query getServiceLain(String id){
+        return databaseRef.child("service").child(id).orderByChild("jenisService").equalTo("Service Lain");
     }
 
     public Task<Void> saveMotor(Motor motor){

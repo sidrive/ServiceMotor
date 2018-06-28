@@ -24,6 +24,9 @@ public class UserService {
         this.databaseRef = FirebaseDatabase.getInstance().getReference();
     }
 
+    public UserService() {
+
+    }
 
 
     public void createUser(User user) {
