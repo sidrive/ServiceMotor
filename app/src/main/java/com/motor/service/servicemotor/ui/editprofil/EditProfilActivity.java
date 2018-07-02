@@ -417,7 +417,7 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
 
     private void initBirthDay(long timemilis) {
         dateBirthDay = timemilis;
-        String date = DateFormater.getDate(dateBirthDay, "dd MMMM Y");
+        String date = DateFormater.getDate(dateBirthDay, "dd MMMM yyyy");
         inputBirthDay.setText(date);
     }
 
@@ -621,9 +621,18 @@ public class EditProfilActivity extends BaseActivity implements OnDateSetListene
             }
         }
 
-        if (TextUtils.isEmpty(inputBirthDay.getText().toString())) {
+
+        if (inputBirthDay.getText().toString().contains("Masukan Tanggal Lahir")) {
             inputBirthDay.setError(strErrRequired);
             focusView = inputBirthDay;
+            cancel = true;
+            showLoading(false);
+            Log.e(TAG, "validate: "+inputBirthDay.getText() );
+        }
+
+        if(inputGender.getText().toString().contains("Pilih Jenis Kelamin")){
+            inputGender.setError(strErrRequired);
+            focusView = inputGender;
             cancel = true;
             showLoading(false);
         }
