@@ -64,10 +64,13 @@ public class Motor implements Serializable {
     @NonNull
     private Long tahun_pajak;
 
+    @NonNull
+    private Long tglbayar_pajak;
+
     public Motor(){}
 
 
-    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String jenis_service, @NonNull String ket_service, @NonNull int km_NextService, @NonNull int km_now, @NonNull int km_ratarata, @NonNull Boolean motor_utama, @NonNull String photo_url, @NonNull Long tgl_nextService, @NonNull Long tgl_service, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull Long tahun_pajak) {
+    public Motor(@NonNull String idmotor, @NonNull String userid, @NonNull String jenis_service, @NonNull String ket_service, @NonNull int km_NextService, @NonNull int km_now, @NonNull int km_ratarata, @NonNull Boolean motor_utama, @NonNull String photo_url, @NonNull Long tgl_nextService, @NonNull Long tgl_service, @NonNull String merk, @NonNull String type, @NonNull String seri, @NonNull String plat, @NonNull String tahun_buat, @NonNull String no_rangka, @NonNull Long tahun_pajak, @NonNull Long tglbayar_pajak) {
         this.idmotor = idmotor;
         this.userid = userid;
         this.jenis_service = jenis_service;
@@ -86,6 +89,7 @@ public class Motor implements Serializable {
         this.tahun_buat = tahun_buat;
         this.no_rangka = no_rangka;
         this.tahun_pajak = tahun_pajak;
+        this.tglbayar_pajak = tglbayar_pajak;
     }
 
     @NonNull
@@ -270,7 +274,18 @@ public class Motor implements Serializable {
                 ", plat='" + plat + '\'' +
                 ", tahun_buat='" + tahun_buat + '\'' +
                 ", no_rangka='" + no_rangka + '\'' +
-                ", tahun_pajak='" + tahun_pajak + '\'' +
+                ", tahun_pajak=" + tahun_pajak +
+                ", tglbayar_pajak=" + tglbayar_pajak +
                 '}';
     }
+
+    @NonNull
+    public Long getTglbayar_pajak() {
+        return tglbayar_pajak;
+    }
+
+    public void setTglbayar_pajak(@NonNull Long tglbayar_pajak) {
+        this.tglbayar_pajak = tglbayar_pajak;
+    }
+
 }

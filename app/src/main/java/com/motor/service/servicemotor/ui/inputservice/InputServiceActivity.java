@@ -114,6 +114,9 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
     @Bind(R.id.imgNota)
     ImageView imgNota;
 
+    @Bind(R.id.view_progress)
+    LinearLayout viewProgress;
+
 
     @Inject
     Motor motor;
@@ -366,9 +369,11 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
 
                 if (imgOriginal != null) {
                     presenter.uploadAvatar(motor,service, imgSmall, imgOriginal);
+                    showLoading(true);
 
                 } else {
                     presenter.updateMotor(motor,service);
+                    showLoading(true);
                 }
             }
 
@@ -482,12 +487,12 @@ public class InputServiceActivity extends BaseActivity implements DialogUploadOp
     }
 
     void showLoading(boolean b) {
-//        if(b){
-//            viewProgress.setVisibility(View.VISIBLE);
-//        }else {
-//            viewProgress.setVisibility(View.GONE);
-//        }
-//        Log.e(TAG, "showLoading: "+b );
+        if(b){
+            viewProgress.setVisibility(View.VISIBLE);
+        }else {
+            viewProgress.setVisibility(View.GONE);
+        }
+        Log.e(TAG, "showLoading: "+b );
     }
 
     private void showAlertDialog(String title, String desc, int icon) {

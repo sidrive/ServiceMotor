@@ -226,4 +226,6 @@
             android:layout_marginHorizontal="5dp"/>
     </LinearLayout>
 
+    <include layout="@layout/view_progress"/>
+
 </android.support.design.widget.CoordinatorLayout>
